@@ -7,5 +7,12 @@
 <body>
     <p1>List of questions</p1>
     <th>erdfs</th>
+    <br>
+    {% for question in questions %}
+        {% for que in question %}
+        {{que}}
+        <br>
+        {% endfor %}
+    {% endfor %}
 </body>
 </html>

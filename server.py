@@ -4,7 +4,8 @@ routes, request handling, session, and so on.
 This is the only file to be imported from Flask.
 """
 from data_manager import data_crud
-from flask import Flask,render_template
+from flask import Flask, render_template
+import csv
 from server_const import QUESTIONS
 
 app = Flask(__name__)
@@ -16,10 +17,11 @@ def hello():
 
 @app.route('/list')
 def list_questions():
-    questions = data_crud.read_data(QUESTIONS,headers='') #do dodania nazwa pliku
-    print(questions)
-
-    return render_template('list.html', questions)
+    with open(QUESTIONS, newline='') as f:
+        reader = csv.reader(f)
+        data = list(reader)
+    print(data[0])
+    return render_template('list.html', questions = data)
 
 
 if __name__ == "__main__":
