@@ -5,6 +5,7 @@ This is the only file to be imported from Flask.
 """
 from data_manager import data_crud
 from flask import Flask,render_template
+from server_const import QUESTIONS
 
 app = Flask(__name__)
 
@@ -15,10 +16,10 @@ def hello():
 
 @app.route('/list')
 def list_questions():
-    #user_stories = data_crud.read_data() #do dodania nazwa pliku
+    questions = data_crud.read_data(QUESTIONS,headers='') #do dodania nazwa pliku
+    print(questions)
 
-
-    return render_template('list.html')
+    return render_template('list.html', questions)
 
 
 if __name__ == "__main__":
