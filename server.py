@@ -16,44 +16,44 @@ def hello():
 @app.route('/list')
 def list_questions():
     a = data.read_csv(data_const.QUESTIONS)
-    matrix = data.sort_matrix_by_column_with_headers(a,column=3 )
+    matrix = data.sort_matrix_by_column_with_headers(a, column = 2)
     return render_template('list.html', questions = matrix)
 
-@app.route('/add-question')
+@app.route('/add-question', methods = ['GET'])
 def add_question():
-    return 'add_question'
+    return render_template('add_question.html')
 
-app.route('/question/')
-def question():
-    return 'question'
+app.route('/question/<question_id>')
+def question(question_id):
+    return 'question' + str(question_id)
 
 app.route('/add-question')
 def add_question():
     return 'add_question'
 
-app.route('/question/delete')
-def question_delete():
-    return 'question_delete'
+app.route('/question/<question_id>/delete')
+def question_delete(question_id):
+    return 'question_delete' + str(question_id)
 
-app.route('/question/edit')
-def question_edit():
-    return 'question_edit'
+app.route('/question/<question_id>/edit')
+def question_edit(question_id):
+    return 'question_edit' + str(question_id)
 
-app.route('/question/new-answer')
-def new_answer():
-    return 'new_answer'
+app.route('/question/<question_id>/new-answer')
+def new_answer(question_id):
+    return 'new_answer' + str(question_id)
 
-app.route('/answer/delete')
-def answer_delete():
-    return 'answer_delete'
+app.route('/answer/<question_id>/delete')
+def answer_delete(question_id):
+    return 'answer_delete' + str(question_id)
 
-app.route('/question/vote-up')
-def vote_up():
-    return 'vote_up'
+app.route('/question/<question_id>/vote-up')
+def vote_up(question_id):
+    return 'vote_up' + str(question_id)
 
-app.route('/question/vote-down')
-def vote_down():
-    return 'vote_down'
+app.route('/question/<question_id>/vote-down')
+def vote_down(question_id):
+    return 'vote_down' + str(question_id)
 
 if __name__ == "__main__":
     app.run(
