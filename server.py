@@ -4,7 +4,7 @@ routes, request handling, session, and so on.
 This is the only file to be imported from Flask.
 """
 from flask import Flask, render_template, request, redirect
-from data_manager import data, data_const
+from data_manager import data, data_const, data_functions
 
 app = Flask(__name__)
 
@@ -15,15 +15,14 @@ def hello():
 
 @app.route('/list')
 def list_questions():
-    a = data.read_csv()
-    matrix = data.sort_matrix_by_column_with_headers(a, column = 2)
+    matrix = data_functions.sort_matrix_by_column_with_headers(data_functions.read_csv(data_const.QUESTIONS), data_const.VIEW_NUMBER_POSITION)
     return render_template('list.html', questions = matrix)
 
 @app.route('/add_question', methods = ["POST", "GET"])
 def add_question():
     if request.method == "POST":
         question = request.form
-        data.add_new_question(question)
+        data.add_new_question(question, data_const.QUESTIONS)
         return redirect('list')
     else:
         return render_template('add_question.html')
@@ -62,7 +61,6 @@ def vote_down(question_id):
 
 if __name__ == "__main__":
     app.run(
-        host='0.0.0.0',
         port=5000,
         debug=True,
     )
