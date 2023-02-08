@@ -19,15 +19,14 @@ def list_questions():
     matrix = data.sort_matrix_by_column_with_headers(a, column = 2)
     return render_template('list.html', questions = matrix)
 
-@app.route('/add_question')
+@app.route('/add_question', methods = ["POST", "GET"])
 def add_question():
-    return render_template('add_question.html')
-
-@app.route('/add_question_task', methods = ["POST"])
-def add_question_task():
-    question = request.form
-    data.add_new_question(question)
-    return redirect('list')
+    if request.method == "POST":
+        question = request.form
+        data.add_new_question(question)
+        return redirect('list')
+    else:
+        return render_template('add_question.html')
 
 app.route('/question/<question_id>')
 def question(question_id):
