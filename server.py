@@ -3,7 +3,7 @@ This layer contains logic related to Flask, such as server,
 routes, request handling, session, and so on. 
 This is the only file to be imported from Flask.
 """
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 from data_manager import data, data_const
 
 app = Flask(__name__)
@@ -15,13 +15,19 @@ def hello():
 
 @app.route('/list')
 def list_questions():
-    a = data.read_csv(data_const.QUESTIONS)
+    a = data.read_csv()
     matrix = data.sort_matrix_by_column_with_headers(a, column = 2)
     return render_template('list.html', questions = matrix)
 
-@app.route('/add-question', methods = ['GET'])
+@app.route('/add_question')
 def add_question():
     return render_template('add_question.html')
+
+@app.route('/add_question_task', methods = ["POST"])
+def add_question_task():
+    question = request.form
+    data.add_new_question(question)
+    return redirect('list')
 
 app.route('/question/<question_id>')
 def question(question_id):

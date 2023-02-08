@@ -10,11 +10,17 @@
     }
 </style>
 <body>
-    <h1>Add question</h1>
-    <form>
-
+    <h1>Add question</h1>   
+    <form action="add_question_task", method="POST">
+        <label>Story title</label>
+        <input type="text" name="title"/>
+        <br>
+        <label>Story estimation</label>
+        <input type="text", name="message"/>
+        <br>
+        <input type="submit", value="Add story"/>
     </form>
 
-
+    <a href="/list">return</a>
 </body>
 </html>
