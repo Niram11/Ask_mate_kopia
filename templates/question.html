@@ -12,25 +12,13 @@
 <body>
     <h1>List of questions</h1>
     <table style="width:100%">
-    {% for question in questions[:1] %}
+    {% for question in questions[1:] %}
         <tr>
         {% for que in question%}
         <th>{{que}}</th>
         {% endfor %}
-        <td> </td>
-        </tr>
-    {% endfor %}
-
-    {% for question in questions[1:] %}
-        <tr>
-        {% for que in question%}
-        <td>{{que}}</td>
-        {% endfor %}
-        <td>s</td>
-        <th><a href="{{ url_for( 'question', id = 1 ) }}">view question</a></th>
         </tr>
     {% endfor %}
     </table>
-<a href="/add_question">add_question</a>
 </body>
 </html>

@@ -3,7 +3,7 @@ This layer contains logic related to Flask, such as server,
 routes, request handling, session, and so on. 
 This is the only file to be imported from Flask.
 """
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
 from data_manager import data, data_const, data_functions
 
 app = Flask(__name__)
@@ -13,10 +13,13 @@ app = Flask(__name__)
 def hello():
     return "Hello World!"
 
-@app.route('/list')
+@app.route('/list', methods = ["POST", "GET"])
 def list_questions():
-    matrix = data_functions.sort_matrix_by_column_with_headers(data_functions.read_csv(data_const.QUESTIONS), data_const.VIEW_NUMBER_POSITION)
-    return render_template('list.html', questions = matrix)
+    if request.method == "GET":
+        matrix = data_functions.sort_matrix_by_column_with_headers(data_functions.read_csv(data_const.QUESTIONS), data_const.VIEW_NUMBER_POSITION)
+        return render_template('list.html', questions = matrix)
+    else:
+        return 'jhgf'
 
 @app.route('/add_question', methods = ["POST", "GET"])
 def add_question():
@@ -27,9 +30,9 @@ def add_question():
     else:
         return render_template('add_question.html')
 
-app.route('/question/<question_id>')
-def question(question_id):
-    return 'question' + str(question_id)
+app.route('/question/<id>')
+def question(id):
+    return f"question with id: {id}"
 
 app.route('/add-question')
 def add_question():
