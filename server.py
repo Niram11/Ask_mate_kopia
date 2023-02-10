@@ -30,35 +30,32 @@ def add_question():
     else:
         return render_template('add_question.html')
 
-app.route('/question/<id>')
+@app.route('/question/<id>')
 def question(id):
-    return f"question with id: {id}"
+    question = data_functions.get_question_with_id(data_const.QUESTIONS, id)
+    return render_template('question.html', data = question)
 
-app.route('/add-question')
-def add_question():
-    return 'add_question'
-
-app.route('/question/<question_id>/delete')
+@app.route('/question/<question_id>/delete')
 def question_delete(question_id):
     return 'question_delete' + str(question_id)
 
-app.route('/question/<question_id>/edit')
+@app.route('/question/<question_id>/edit')
 def question_edit(question_id):
     return 'question_edit' + str(question_id)
 
-app.route('/question/<question_id>/new-answer')
+@app.route('/question/<question_id>/new-answer')
 def new_answer(question_id):
     return 'new_answer' + str(question_id)
 
-app.route('/answer/<question_id>/delete')
+@app.route('/answer/<question_id>/delete')
 def answer_delete(question_id):
     return 'answer_delete' + str(question_id)
 
-app.route('/question/<question_id>/vote-up')
+@app.route('/question/<question_id>/vote-up')
 def vote_up(question_id):
     return 'vote_up' + str(question_id)
 
-app.route('/question/<question_id>/vote-down')
+@app.route('/question/<question_id>/vote-down')
 def vote_down(question_id):
     return 'vote_down' + str(question_id)
 

@@ -26,8 +26,7 @@
         {% for que in question%}
         <td>{{que}}</td>
         {% endfor %}
-        <td>s</td>
-        <th><a href="{{ url_for( 'question', id = 1 ) }}">view question</a></th>
+        <th><a href="{{ url_for( 'question', id = question[0] ) }}">view question</a></th>
         </tr>
     {% endfor %}
     </table>
