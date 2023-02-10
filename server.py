@@ -15,11 +15,8 @@ def hello():
 
 @app.route('/list', methods = ["POST", "GET"])
 def list_questions():
-    if request.method == "GET":
-        matrix = data_functions.sort_matrix_by_column_with_headers(data_functions.read_csv(data_const.QUESTIONS), data_const.VIEW_NUMBER_POSITION)
-        return render_template('list.html', questions = matrix)
-    else:
-        return 'jhgf'
+    matrix = data_functions.sort_matrix_by_column_with_headers(data_functions.read_csv(data_const.QUESTIONS), data_const.VIEW_NUMBER_POSITION)
+    return render_template('list.html', questions = matrix)
 
 @app.route('/add_question', methods = ["POST", "GET"])
 def add_question():
@@ -37,7 +34,7 @@ def question(id):
 
 @app.route('/question/<question_id>/delete')
 def question_delete(question_id):
-    return 'question_delete' + str(question_id)
+    return redirect(url_for('list_questions'))
 
 @app.route('/question/<question_id>/edit')
 def question_edit(question_id):
