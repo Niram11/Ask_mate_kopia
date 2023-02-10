@@ -17,6 +17,7 @@ def add_new_question(question_contents, filename):
     question.append(question_contents['message']) # MESSAGE FROM HTML
     question.append('') # .jpg (TO DO LATER)
     write_new_question(question, filename)
+    return data_functions.get_single_id(question)
 
 def get_id(filename):
     data = data_functions.read_csv(filename)

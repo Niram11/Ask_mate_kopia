@@ -25,15 +25,15 @@ def list_questions():
 def add_question():
     if request.method == "POST":
         question = request.form
-        data.add_new_question(question, data_const.QUESTIONS)
-        return redirect('list')
+        a = data.add_new_question(question, data_const.QUESTIONS)
+        return redirect(url_for('question', id = a))
     else:
         return render_template('add_question.html')
 
 @app.route('/question/<id>')
 def question(id):
-    question = data_functions.get_question_with_id(data_const.QUESTIONS, id)
-    return render_template('question.html', data = question)
+    question_id = data_functions.get_question_with_id(data_const.QUESTIONS, id)
+    return render_template('question.html', data = question_id)
 
 @app.route('/question/<question_id>/delete')
 def question_delete(question_id):

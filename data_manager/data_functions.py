@@ -37,6 +37,9 @@ def get_message(data):
     output = [data[i][data_const.MESSAGE_POSITION] for i in range(1,len(data))]
     return output
 
+def get_single_id(data):
+    return data[0]
+    
 def sort_matrix_by_column_with_headers(data,column):
     output = [data[0]]
     data.remove(data[0])
