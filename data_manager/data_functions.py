@@ -53,12 +53,16 @@ def sort_matrix_by_column_with_headers(data,column):
         data.remove(data[most])
     return output
 
-def get_question_with_id(filename, id):
-    data = read_csv(filename)
+def get_question_with_id_and_headears(data, id):
     headers = data[0]
     question_with_id = [data[i] for i in range(len(data)) if data[i][0] == id]
     question_with_id.insert(0,headers)
     return question_with_id
+
+def get_question_with_id(data, id):
+    question_with_id = [data[i] for i in range(len(data)) if data[i][0] == id]
+    return question_with_id[0]
+
 
     # size = len(data)
     # output = []

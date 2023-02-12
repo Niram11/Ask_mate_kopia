@@ -29,11 +29,14 @@ def add_question():
 
 @app.route('/question/<id>')
 def question(id):
-    question_id = data_functions.get_question_with_id(data_const.QUESTIONS, id)
+    data = data_functions.read_csv(data_const.QUESTIONS)
+    question_id = data_functions.get_question_with_id_and_headears(data, id)
     return render_template('question.html', data = question_id)
 
 @app.route('/question/<question_id>/delete')
 def question_delete(question_id):
+    all = data_functions.read_csv(data_const.QUESTIONS)
+    data.delete_question_with_id(all, question_id)
     return redirect(url_for('list_questions'))
 
 @app.route('/question/<question_id>/edit')

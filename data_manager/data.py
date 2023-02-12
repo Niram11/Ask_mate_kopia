@@ -1,4 +1,4 @@
-from data_manager import data_functions
+from data_manager import data_functions, data_const
 from datetime import datetime
 
 
@@ -27,3 +27,8 @@ def get_id(filename):
 def get_timestamp():
     now = datetime.now()
     return now.strftime("%Y%m%d%H")
+
+def delete_question_with_id(data, question_id):
+    question = data_functions.get_question_with_id(data, question_id)
+    data.remove(question)
+    data_functions.write_csv(data, data_const.QUESTIONS)
