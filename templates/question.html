@@ -24,6 +24,8 @@
         {% endfor %}
         </tr>
     </table>
+    <a href="{{ url_for( 'question_edit', question_id = data[1][0] )}}">edit question</a>
+    <br>
     <a href="{{ url_for( 'question_delete', question_id = data[1][0] )}}">delete question</a>
     <br>
     <a href="/list">return</a>

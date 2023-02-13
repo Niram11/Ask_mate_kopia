@@ -63,6 +63,15 @@ def get_question_with_id(data, id):
     question_with_id = [data[i] for i in range(len(data)) if data[i][0] == id]
     return question_with_id[0]
 
+def edit_data_with_id(all_data, id, edited_question):
+    place = 0 
+    for i in range(len(all_data)):
+        if all_data[i][0] == id:
+            place = i
+    all_data[place][data_const.TITLE_POSITION] = edited_question['title']
+    all_data[place][data_const.MESSAGE_POSITION] = edited_question['message']
+    write_csv(all_data, data_const.QUESTIONS)
+
 
     # size = len(data)
     # output = []

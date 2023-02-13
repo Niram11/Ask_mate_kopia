@@ -39,9 +39,15 @@ def question_delete(question_id):
     data.delete_question_with_id(all, question_id)
     return redirect(url_for('list_questions'))
 
-@app.route('/question/<question_id>/edit')
+@app.route('/question/<question_id>/edit', methods = ["POST", "GET"])
 def question_edit(question_id):
-    return 'question_edit' + str(question_id)
+    data = data_functions.read_csv(data_const.QUESTIONS)
+    question = data_functions.get_question_with_id(data, question_id)
+    if request.method == "POST":
+        data_functions.edit_data_with_id(data, question_id, request.form)
+        return redirect(url_for('question', id = question_id))
+    else:
+        return render_template('edit_question.html', question = question)
 
 @app.route('/question/<question_id>/new-answer')
 def new_answer(question_id):
