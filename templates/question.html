@@ -37,7 +37,7 @@
             {% endfor %}
         </tr>
     </table>
-    <a href='/question/<question_id>/new-answer'>add answer</a>
+    <a href="{{ url_for ( 'new_answer', question_id = data[1][0]) }}">add answer</a>
     <br>
     <a href="{{ url_for( 'question_edit', question_id = data[1][0] )}}">edit question</a>
     <br>

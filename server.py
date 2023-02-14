@@ -60,7 +60,7 @@ def question_edit(question_id):
 
 @app.route('/question/<question_id>/new-answer')
 def new_answer(question_id):
-    return 'new_answer' + str(question_id)
+    return render_template('add_new_answer.html')
 
 
 @app.route('/answer/<question_id>/delete')
