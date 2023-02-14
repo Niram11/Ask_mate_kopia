@@ -24,6 +24,21 @@
         {% endfor %}
         </tr>
     </table>
+    <h2>Answers</h2>
+    <table>
+        <tr>
+            {% for i in answers[0] %}
+            <th>{{i}}</th>
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for i in answers[1] %}
+            <td>{{i}}</td>
+            {% endfor %}
+        </tr>
+    </table>
+    <a href='/question/<question_id>/new-answer'>add answer</a>
+    <br>
     <a href="{{ url_for( 'question_edit', question_id = data[1][0] )}}">edit question</a>
     <br>
     <a href="{{ url_for( 'question_delete', question_id = data[1][0] )}}">delete question</a>

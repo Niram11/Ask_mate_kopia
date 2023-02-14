@@ -1,6 +1,5 @@
 QUESTIONS = 'sample_data/question.csv'
-
-
+ANSWERS = 'sample_data/answer.csv'
 
 ID_POSITION = 0
 SUBMIOSION_TIME_POSITION = 1

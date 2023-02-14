@@ -8,43 +8,52 @@ def read_csv(filename):
         data = list(reader)
     return data
 
-def write_csv(data,filename):
+
+def write_csv(data, filename):
     with open(filename, 'w', newline='') as csvfile:
-         writer = csv.writer(csvfile)
-         writer.writerows(data)
+        writer = csv.writer(csvfile)
+        writer.writerows(data)
+
 
 def get_ids(data):
-    output = [data[i][data_const.ID_POSITION] for i in range(1,len(data))]
+    output = [data[i][data_const.ID_POSITION] for i in range(1, len(data))]
     return output
+
 
 def get_submission_time(data):
-    output = [data[i][data_const.SUBMIOSION_TIME_POSITION] for i in range(1,len(data))]
+    output = [data[i][data_const.SUBMIOSION_TIME_POSITION] for i in range(1, len(data))]
     return output
+
 
 def get_view_number(data):
-    output = [data[i][data_const.VIEW_NUMBER_POSITION] for i in range(1,len(data))]
+    output = [data[i][data_const.VIEW_NUMBER_POSITION] for i in range(1, len(data))]
     return output
+
 
 def get_vote_number(data):
-    output = [data[i][data_const.VOTE_NUMBER_POSITION] for i in range(1,len(data))]
+    output = [data[i][data_const.VOTE_NUMBER_POSITION] for i in range(1, len(data))]
     return output
+
 
 def get_title(data):
-    output = [data[i][data_const.TITLE_POSITION] for i in range(1,len(data))]
+    output = [data[i][data_const.TITLE_POSITION] for i in range(1, len(data))]
     return output
 
+
 def get_message(data):
-    output = [data[i][data_const.MESSAGE_POSITION] for i in range(1,len(data))]
+    output = [data[i][data_const.MESSAGE_POSITION] for i in range(1, len(data))]
     return output
+
 
 def get_single_id(data):
     return data[0]
-    
-def sort_matrix_by_column_with_headers(data,column):
+
+
+def sort_matrix_by_column_with_headers(data, column):
     output = [data[0]]
     data.remove(data[0])
     while data != []:
-        sorted = [0,0,0,0,0,0,0]
+        sorted = [0, 0, 0, 0, 0, 0, 0]
         for i in range(len(data)):
             if int(data[i][column]) >= int(sorted[column]):
                 sorted = data[i]
@@ -53,25 +62,27 @@ def sort_matrix_by_column_with_headers(data,column):
         data.remove(data[most])
     return output
 
-def get_question_with_id_and_headears(data, id):
+
+def get_data_with_id_and_headers(data, id):
     headers = data[0]
-    question_with_id = [data[i] for i in range(len(data)) if data[i][0] == id]
-    question_with_id.insert(0,headers)
-    return question_with_id
+    data_with_id = [data[i] for i in range(len(data)) if data[i][0] == id]
+    data_with_id.insert(0, headers)
+    return data_with_id
+
 
 def get_question_with_id(data, id):
     question_with_id = [data[i] for i in range(len(data)) if data[i][0] == id]
     return question_with_id[0]
 
+
 def edit_data_with_id(all_data, id, edited_question):
-    place = 0 
+    place = 0
     for i in range(len(all_data)):
         if all_data[i][0] == id:
             place = i
     all_data[place][data_const.TITLE_POSITION] = edited_question['title']
     all_data[place][data_const.MESSAGE_POSITION] = edited_question['message']
     write_csv(all_data, data_const.QUESTIONS)
-
 
     # size = len(data)
     # output = []
@@ -89,9 +100,6 @@ def edit_data_with_id(all_data, id, edited_question):
     #     data.remove(data[most])
     # return output
 
-
-
-
 # def list_to_dict(data, headers):
 #     data_list = []
 #     for row in data:
@@ -103,7 +111,7 @@ def edit_data_with_id(all_data, id, edited_question):
 #     for item_index, item in enumerate(data_inputs):
 #         new_data_dict[headers[item_index]] = item
 #     return new_data_dict
-    
+
 # def get_data_by_header(headers, header, data):
 #     data = list_to_dict(data, headers)
 #     return [item[header] for item in data]
@@ -135,4 +143,3 @@ def edit_data_with_id(all_data, id, edited_question):
 # def return_column(data, headers, column_to_return, column_to_check, check):
 #     data = list_to_dict(data, headers)
 #     return [[row[column_to_return], row[column_to_check]] for row in data if int(row[column_to_check]) == check]
-
