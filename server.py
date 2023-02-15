@@ -30,6 +30,7 @@ def add_question():
 @app.route('/question/<id>')
 def question(id):
     data = data_functions.read_csv(data_const.QUESTIONS)
+    data_functions.increase_views(data, id)
     question_id = data_functions.get_question_with_id_and_headears(data, id)
     return render_template('question.html', data = question_id)
 
