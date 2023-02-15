@@ -49,6 +49,13 @@ def get_single_id(data):
     return data[0]
 
 
+def get_answers_with_question_id(data):
+    list_answers = []
+    for value in enumerate(data):
+        list_answers.append(value)
+    return list_answers
+
+
 def sort_matrix_by_column_with_headers(data, column):
     output = [data[0]]
     data.remove(data[0])

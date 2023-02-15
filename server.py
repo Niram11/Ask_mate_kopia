@@ -36,8 +36,8 @@ def question(id):
     data = data_functions.read_csv(data_const.QUESTIONS)
     question_id = data_functions.get_data_with_id_and_headers(data, id)
     answers = data_functions.read_csv(data_const.ANSWERS)
-    answers_with_id = data_functions.get_data_with_id_and_headers(answers, id)
-    return render_template('question.html', data=question_id, answers=answers_with_id)
+    listing = data_functions.sort_matrix_by_column_with_headers(answers, data_const.ID_POSITION)
+    return render_template('question.html', data=question_id, answers=listing)
 
 
 @app.route('/question/<question_id>/delete')
@@ -58,9 +58,12 @@ def question_edit(question_id):
         return render_template('edit_question.html', question=question)
 
 
-@app.route('/question/<question_id>/new-answer')
+@app.route('/question/<question_id>/new-answer', methods=["POST", "GET"])
 def new_answer(question_id):
-    return render_template('add_new_answer.html')
+    if request.method == 'POST':
+        pass
+    else:
+        return render_template('add_new_answer.html')
 
 
 @app.route('/answer/<question_id>/delete')

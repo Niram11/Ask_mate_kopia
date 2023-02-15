@@ -27,12 +27,12 @@ def get_id(filename):
     return int(max(existing_ids)) + 1
 
 
-def add_new_answer(answer_content, filename):
+def add_new_answer(answer_content, filename, question_id):
     answers = []
     answers.append(get_id(filename))
     answers.append(get_timestamp())
     answers.append(0)  # vote
-    answers.append('question_id')
+    answers.append(question_id)
     answers.append(answer_content['message'])
     answers.append('')  # image
 

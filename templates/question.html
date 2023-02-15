@@ -31,11 +31,13 @@
             <th>{{i}}</th>
             {% endfor %}
         </tr>
+        {% for ans in answers[1:] %}
         <tr>
-            {% for i in answers[1] %}
+            {% for i in ans %}
             <td>{{i}}</td>
             {% endfor %}
         </tr>
+        {% endfor %}
     </table>
     <a href="{{ url_for ( 'new_answer', question_id = data[1][0]) }}">add answer</a>
     <br>
