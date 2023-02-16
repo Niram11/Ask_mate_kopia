@@ -80,7 +80,26 @@ def increase_views(data, question_id):
     data[place][data_const.VIEW_NUMBER_POSITION] = 1 + int(data[place][data_const.VIEW_NUMBER_POSITION])
     write_csv(data, data_const.QUESTIONS)
 
-    
+def vote_up(question_id):
+    data = read_csv(data_const.QUESTIONS)
+    place = 0 
+    for i in range(len(data)):
+        if data[i][0] == question_id:
+            place = i
+    data[place][data_const.VOTE_NUMBER_POSITION] = 1 + int(data[place][data_const.VOTE_NUMBER_POSITION])
+    write_csv(data, data_const.QUESTIONS)
+
+def vote_down(question_id):
+    data = read_csv(data_const.QUESTIONS)
+    place = 0 
+    for i in range(len(data)):
+        if data[i][0] == question_id:
+            place = i
+    if int(data[place][data_const.VOTE_NUMBER_POSITION]) - 1 >= 0:
+        data[place][data_const.VOTE_NUMBER_POSITION] = int(data[place][data_const.VOTE_NUMBER_POSITION]) - 1
+    write_csv(data, data_const.QUESTIONS)
+
+
     # size = len(data)
     # output = []
     # output.append(data[0])

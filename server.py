@@ -60,11 +60,13 @@ def answer_delete(question_id):
 
 @app.route('/question/<question_id>/vote-up')
 def vote_up(question_id):
-    return 'vote_up' + str(question_id)
+    data_functions.vote_up(question_id)
+    return redirect(url_for('list_questions'))
 
 @app.route('/question/<question_id>/vote-down')
 def vote_down(question_id):
-    return 'vote_down' + str(question_id)
+    data_functions.vote_down(question_id)
+    return redirect(url_for('list_questions'))
 
 if __name__ == "__main__":
     app.run(
