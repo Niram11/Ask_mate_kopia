@@ -13,29 +13,27 @@ def write_csv(data,filename):
          writer = csv.writer(csvfile)
          writer.writerows(data)
 
-def get_ids(data):
-    output = [data[i][data_const.ID_POSITION] for i in range(1,len(data))]
+def get_data_by_header(data, header):
+    output = [data[i][header] for i in range(1,len(data))]
     return output
+
+def get_ids(data):
+    return get_data_by_header(data, data_const.ID_POSITION)
 
 def get_submission_time(data):
-    output = [data[i][data_const.SUBMIOSION_TIME_POSITION] for i in range(1,len(data))]
-    return output
+    return get_data_by_header(data, data_const.SUBMIOSION_TIME_POSITION)
 
 def get_view_number(data):
-    output = [data[i][data_const.VIEW_NUMBER_POSITION] for i in range(1,len(data))]
-    return output
+    return get_data_by_header(data, data_const.VIEW_NUMBER_POSITION)
 
 def get_vote_number(data):
-    output = [data[i][data_const.VOTE_NUMBER_POSITION] for i in range(1,len(data))]
-    return output
+    return get_data_by_header(data, data_const.VOTE_NUMBER_POSITION)
 
 def get_title(data):
-    output = [data[i][data_const.TITLE_POSITION] for i in range(1,len(data))]
-    return output
+    return get_data_by_header(data, data_const.TITLE_POSITION)
 
 def get_message(data):
-    output = [data[i][data_const.MESSAGE_POSITION] for i in range(1,len(data))]
-    return output
+    return get_data_by_header(data, data_const.MESSAGE_POSITION)
 
 def get_single_id(data):
     return data[0]
