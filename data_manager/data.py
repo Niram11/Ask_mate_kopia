@@ -35,6 +35,7 @@ def add_new_answer(answer_content, filename, question_id):
     answers.append(question_id)
     answers.append(answer_content['message'])
     answers.append('')  # image
+    write_new_data(answers, filename)
 
 
 def get_timestamp():

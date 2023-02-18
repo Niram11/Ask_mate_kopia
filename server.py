@@ -61,7 +61,9 @@ def question_edit(question_id):
 @app.route('/question/<question_id>/new-answer', methods=["POST", "GET"])
 def new_answer(question_id):
     if request.method == 'POST':
-        pass
+        answer = request.form
+        data.add_new_answer(answer, data_const.ANSWERS, question_id)
+        return redirect(url_for('question', id=question_id))
     else:
         return render_template('add_new_answer.html')
 
