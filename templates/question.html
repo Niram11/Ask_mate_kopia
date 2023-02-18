@@ -45,6 +45,10 @@
     <br>
     <a href="{{ url_for( 'question_delete', question_id = data[1][0] )}}">delete question</a>
     <br>
+    <a href="{{ url_for( 'vote_up', question_id = data[1][0] )}}">vote up question</a>
+    <br>
+    <a href="{{ url_for( 'vote_down', question_id = data[1][0] )}}">vote down question</a>
+    <br>
     <a href="/list">return</a>
 </body>
 </html>

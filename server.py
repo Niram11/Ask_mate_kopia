@@ -34,10 +34,9 @@ def add_question():
 @app.route('/question/<id>')
 def question(id):
     data = data_functions.read_csv(data_const.QUESTIONS)
-    question_id = data_functions.get_data_with_id_and_headers(data, id)
-    answers = data_functions.read_csv(data_const.ANSWERS)
-    listing = data_functions.sort_matrix_by_column_with_headers(answers, data_const.ID_POSITION)
-    return render_template('question.html', data=question_id, answers=listing)
+    data_functions.increase_views(data, id)
+    question_id = data_functions.get_question_with_id_and_headears(data, id)
+    return render_template('question.html', data = question_id)
 
 
 @app.route('/question/<question_id>/delete')
@@ -75,12 +74,14 @@ def answer_delete(question_id):
 
 @app.route('/question/<question_id>/vote-up')
 def vote_up(question_id):
-    return 'vote_up' + str(question_id)
+    data_functions.vote_up(question_id)
+    return redirect(url_for('list_questions'))
 
 
 @app.route('/question/<question_id>/vote-down')
 def vote_down(question_id):
-    return 'vote_down' + str(question_id)
+    data_functions.vote_down(question_id)
+    return redirect(url_for('list_questions'))
 
 
 if __name__ == "__main__":
