@@ -34,9 +34,11 @@ def add_question():
 @app.route('/question/<id>')
 def question(id):
     data = data_functions.read_csv(data_const.QUESTIONS)
-    data_functions.increase_views(data, id)
-    question_id = data_functions.get_question_with_id_and_headears(data, id)
-    return render_template('question.html', data = question_id)
+    question_id = data_functions.get_data_with_id_and_headers(data, id)
+    answers = data_functions.read_csv(data_const.ANSWERS)
+    listing = data_functions.sort_matrix_by_column_with_headers(answers, data_const.ID_POSITION)
+    return render_template('question.html', data=question_id, answers=listing)
+
 
 
 @app.route('/question/<question_id>/delete')
