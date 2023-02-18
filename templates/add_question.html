@@ -1,0 +1,26 @@
+<html>
+<head>
+    <title>Add question</title>
+    <meta keywords.="story agile">
+</head>
+<style>
+    body {background-color: powderblue;}
+    table, th, td {
+      border:1px solid black;
+    }
+</style>
+<body>
+    <h1>Add question</h1>   
+    <form action="add_question", method="POST">
+        <label>Question title</label>
+        <input type="text" name="title"/>
+        <br>
+        <label>Question message</label>
+        <input type="text", name="message"/>
+        <br>
+        <input type="submit", value="Add story"/>
+    </form>
+
+    <a href="/list">return</a>
+</body>
+</html>

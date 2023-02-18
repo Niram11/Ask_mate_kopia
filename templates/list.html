@@ -1,11 +1,35 @@
 <html>
 <head>
-    <title>Story list</title>
+    <title>List of questions</title>
     <meta keywords.="story agile">
 </head>
-
+<style>
+    body {background-color: powderblue;}
+    table, th, td {
+      border:1px solid black;
+    }
+</style>
 <body>
-    <p1>List of questions</p1>
-    <th>erdfs</th>
+    <h1>List of questions</h1>
+    <table style="width:100%">
+    {% for question in questions[:1] %}
+        <tr>
+        {% for que in question%}
+        <th>{{que}}</th>
+        {% endfor %}
+        <td> </td>
+        </tr>
+    {% endfor %}
+
+    {% for question in questions[1:] %}
+        <tr>
+        {% for que in question%}
+        <td>{{que}}</td>
+        {% endfor %}
+        <td><a href="{{ url_for( 'question', id = question[0] ) }}">view question</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+<a href="/add_question">add_question</a>
 </body>
 </html>
