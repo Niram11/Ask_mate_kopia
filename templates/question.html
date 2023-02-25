@@ -10,45 +10,27 @@
     }
 </style>
 <body>
-    <h1>Question ID {{data[1][0]}}</h1>
+    <h1>Question ID {{question[0]['id']}}</h1>
 
     <table style="width:100%">
         <tr>
-        {% for i in data[0]%}
-        <th>{{i}}</th>
+        {% for header in headers %}
+        <th>{{header}}</th>
         {% endfor %}
         </tr>
         <tr>
-        {% for i in data[1]%}
-        <td>{{i}}</td>
-        {% endfor %}
-        </tr>
-    </table>
-    <h2>Answers</h2>
-    <table>
-        <tr>
-            {% for i in answers[0] %}
-            <th>{{i}}</th>
-            {% endfor %}
-        </tr>
-        {% for ans in answers[1:] %}
-        <tr>
-            {% for i in ans %}
-            <td>{{i}}</td>
-            {% endfor %}
+        {% for que in question %}
+        <td>{{que['id']}}</td>
+        <td>{{que['submision_time']}}</td>
+        <td>{{que['view_number']}}</td>
+        <td>{{que['vote_number']}}</td>
+        <td>{{que['title']}}</td>
+        <td>{{que['message']}}</td>
+        <td>{{que['image']}}</td>
         </tr>
         {% endfor %}
     </table>
-    <a href="{{ url_for ( 'new_answer', question_id = data[1][0]) }}">add answer</a>
-    <br>
-    <a href="{{ url_for( 'question_edit', question_id = data[1][0] )}}">edit question</a>
-    <br>
-    <a href="{{ url_for( 'question_delete', question_id = data[1][0] )}}">delete question</a>
-    <br>
-    <a href="{{ url_for( 'vote_up', question_id = data[1][0] )}}">vote up question</a>
-    <br>
-    <a href="{{ url_for( 'vote_down', question_id = data[1][0] )}}">vote down question</a>
-    <br>
+
     <a href="/list">return</a>
 </body>
 </html>
