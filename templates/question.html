@@ -14,7 +14,7 @@
 
     <table style="width:100%">
         <tr>
-        {% for header in headers %}
+        {% for header in question_headers %}
         <th>{{header}}</th>
         {% endfor %}
         </tr>
@@ -30,7 +30,40 @@
         </tr>
         {% endfor %}
     </table>
+    <a href="{{ url_for( 'question_edit', question_id = question[0]['id'] )}}">Edit question</a>
+    <br>
+    <a href="{{ url_for( 'question_delete', question_id = question[0]['id'] )}}">Delete question</a>
+    <br>
+    <a href="{{ url_for( 'question_vote_up', question_id = question[0]['id'] )}}">Vote up question</a>
+    <br>
+    <a href="{{ url_for( 'question_vote_down', question_id = question[0]['id'] )}}">Vote down question</a>
 
+    <h1>Answers</h1>
+    <table style="width:100%">
+    <tr>
+        {% for header in answer_headers %}
+        <th>{{header}}</th>
+        {% endfor %}
+        <th></th>
+    </tr>
+    <tr>
+        {% for answer in answers %}
+        <td>{{answer['id']}}</td>
+        <td>{{answer['submision_time']}}</td>
+        <td>{{answer['vote_number']}}</td>
+        <td>{{answer['message']}}</td>
+        <td>{{answer['image']}}</td>
+        <td><a href="{{ url_for( 'answer_delete', answer_id = answer['id'])}}">Delete answer</a>
+            <br>
+            <a href="{{ url_for( 'answer_vote_up', answer_id = answer['id'] )}}">Vote up answer</a>
+            <br>
+            <a href="{{ url_for( 'answer_vote_down', answer_id = answer['id'] )}}">Vote down answer</a>
+        </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{{ url_for( 'new_answer', question_id = question[0]['id'] )}}">Add new answer</a>
+    <br>
     <a href="/list">return</a>
 </body>
 </html>

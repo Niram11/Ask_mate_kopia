@@ -10,17 +10,16 @@
     }
 </style>
 <body>
-    <h1>Edit question</h1>   
+    <h1>Edit question ID {{question[0]['id']}}</h1>   
     <form action="edit", method="POST">
         <label>Question title</label>
-        <input type="text" name="title"/>
+        <input type="text" name = "title" placeholder = {{question[0]['title']}}>
         <br>
         <label>Question message</label>
-        <input type="text", name="message"/>
+        <input type="text", name="message" placeholder = {{question[0]['message']}}>
         <br>
         <input type="submit", value="Edit"/>
     </form>
-    <h1>{{question}}</h1>
-    <a href="/list">return</a>
+    <a href="{{ url_for( 'question', id = question[0]['id'] ) }}">return</a>
 </body>
 </html>
