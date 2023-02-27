@@ -13,4 +13,5 @@ ANSWER_QUESTION_ID = 3
 
 
 QUESTIONS_HEADERS = ['Question ID', 'Submision time', 'View number', 'Vote number', 'Title', 'Message', 'Image']
-ANSWER_HEADERS = ['Answer ID', 'Submision time', 'Vote number', 'Message', 'Image']
+ANSWER_HEADERS = ['Answer ID', 'Submision time', 'Vote number', 'Answer', 'Image']
+COMMENT_HEADERS = ['Comment ID', 'Submision time', 'Comment', 'Edited times']

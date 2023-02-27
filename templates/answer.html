@@ -1,0 +1,57 @@
+<html>
+<head>
+    <title>Answer ID {{answer[0]['id']}}</title>
+    <meta keywords.="story agile">
+</head>
+<style>
+    body {background-color: powderblue;}
+    table, th, td {
+      border:1px solid black;
+    }
+</style>
+<body>
+    <h1>Answer ID {{answer[0]['id']}}</h1>
+    <table style="width:100%">
+        <tr>
+            {% for header in answer_headers %}
+            <th>{{header}}</th>
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for ans in answer %}
+            <td>{{ans['id']}}</td>
+            <td>{{ans['submision_time']}}</td>
+            <td>{{ans['vote_number']}}</td>
+            <td>{{ans['message']}}</td>
+            <td>{{ans['image']}}</td>
+            {% endfor %}
+        </tr>
+    </table> 
+    <a href="{{ url_for( 'edit_answer', answer_id = answer[0]['id'] ) }}">Edit answer</a>
+
+
+
+    <h1>Answers</h1>
+    <table style="width:100%">
+        <tr>
+            {% for header in comment_headers %}
+            <th>{{header}}</th>
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for comment in comments %}
+            <th>{{comment['id']}}</th>
+            <th>{{comment['submision_time']}}</th>
+            <th>{{comment['message']}}</th>
+            <th>{{comment['edited_numbers']}}</th>
+            <td><a href="{{ url_for( 'edit_answer_comment', comment_id = comment['id'] )}}">Edit comment</a></td>
+        </tr>
+            {% endfor %}
+    </table> 
+
+
+    <a href="{{ url_for( 'new_answer_comment', answer_id = answer[0]['id'] ) }}">Add comment</a>
+    <br>
+    <a href="{{ url_for( 'question', id = answer[0]['question_id'] ) }}">return</a>
+</body>
+</html>

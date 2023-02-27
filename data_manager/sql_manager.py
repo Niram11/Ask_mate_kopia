@@ -131,3 +131,75 @@ def raise_views(question_id):
     cursor.execute(f"""UPDATE questions
     SET view_number = {data[0]['view_number'] + 1}
     WHERE id = {question_id}""")
+
+def get_question_comments(question_id):
+    conn = psycopg2.connect(database = 'postgres', user = 'postgres', password = 'postgres')
+    conn.autocommit = True
+    cursor = conn.cursor(cursor_factory = RealDictCursor)
+    cursor.execute(f"""SELECT id, submision_time, message, edited_numbers from comments
+    WHERE  question_id = {question_id}""")
+    data = cursor.fetchall()
+    return data
+
+def create_comment_for_question(question_id, comment):
+    id = generate_new_id('comments')
+    timestamp = support_functions.get_timestamp()
+    conn = psycopg2.connect(database = 'postgres', user = 'postgres', password = 'postgres')
+    conn.autocommit = True
+    cursor = conn.cursor(cursor_factory = RealDictCursor)
+    cursor.execute(f"INSERT into comments values({id}, {question_id}, 0, '{comment['message']}', '{timestamp}', 0);")
+
+def get_answer(answer_id):
+    id = generate_new_id('comments')
+    timestamp = support_functions.get_timestamp()
+    conn = psycopg2.connect(database = 'postgres', user = 'postgres', password = 'postgres')
+    conn.autocommit = True
+    cursor = conn.cursor(cursor_factory = RealDictCursor)
+    cursor.execute(f"SELECT * from answers WHERE id = {answer_id}")
+    data = cursor.fetchall()
+    return data
+
+def get_answer_comments(answer_id):
+    conn = psycopg2.connect(database = 'postgres', user = 'postgres', password = 'postgres')
+    conn.autocommit = True
+    cursor = conn.cursor(cursor_factory = RealDictCursor)
+    cursor.execute(f"""SELECT id, submision_time, message, edited_numbers from comments
+    WHERE  answer_id = {answer_id}""")
+    data = cursor.fetchall()
+    return data
+
+def create_comment_for_answer(answer_id, comment):
+    id = generate_new_id('comments')
+    timestamp = support_functions.get_timestamp()
+    conn = psycopg2.connect(database = 'postgres', user = 'postgres', password = 'postgres')
+    conn.autocommit = True
+    cursor = conn.cursor(cursor_factory = RealDictCursor)
+    cursor.execute(f"INSERT into comments values({id}, 0, {answer_id}, '{comment['message']}', '{timestamp}', 0);")
+
+def edit_answer(answer_id, edited_data):
+    conn = psycopg2.connect(database = 'postgres', user = 'postgres', password = 'postgres')
+    conn.autocommit = True
+    cursor = conn.cursor()
+    cursor.execute(f"""UPDATE answers
+    SET message = '{edited_data['message']}'
+    WHERE id = {answer_id};""")
+
+def get_comment(comment_id):
+    conn = psycopg2.connect(database = 'postgres', user = 'postgres', password = 'postgres')
+    conn.autocommit = True
+    cursor = conn.cursor(cursor_factory = RealDictCursor)
+    cursor.execute(f"""SELECT * from comments
+    WHERE  id = {comment_id}""")
+    data = cursor.fetchall()
+    return data
+
+def edit_comment(comment_id, edited_data):
+    conn = psycopg2.connect(database = 'postgres', user = 'postgres', password = 'postgres')
+    conn.autocommit = True
+    cursor = conn.cursor(cursor_factory = RealDictCursor)
+    cursor.execute(f"SELECT * from comments WHERE id = {comment_id};")
+    data = cursor.fetchall()
+    cursor.execute(f"""UPDATE comments
+    SET message = '{edited_data['message']}',
+    edited_numbers = {data[0]['edited_numbers'] + 1}
+    WHERE id = {comment_id};""")

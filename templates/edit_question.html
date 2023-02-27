@@ -18,7 +18,7 @@
         <label>Question message</label>
         <input type="text", name="message" placeholder = {{question[0]['message']}}>
         <br>
-        <input type="submit", value="Edit"/>
+        <input type="submit", value="Edit question"/>
     </form>
     <a href="{{ url_for( 'question', id = question[0]['id'] ) }}">return</a>
 </body>

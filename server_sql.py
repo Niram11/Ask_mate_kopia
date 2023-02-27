@@ -24,8 +24,9 @@ def question(id):
     sql_manager.raise_views(id)
     question = sql_manager.get_question(id)
     answers = sql_manager.get_answers_for_question(id)
+    comments = sql_manager.get_question_comments(id)
     return render_template('question.html', question = question, question_headers = data_const.QUESTIONS_HEADERS,
-    answers = answers, answer_headers = data_const.ANSWER_HEADERS)
+    answers = answers, answer_headers = data_const.ANSWER_HEADERS, comments = comments, comment_headers = data_const.COMMENT_HEADERS)
 
 @app.route('/question/<question_id>/new_answer', methods = ["POST", "GET"])
 def new_answer(question_id):
@@ -76,6 +77,64 @@ def answer_vote_up(answer_id):
 def answer_vote_down(answer_id):
     question_id = sql_manager.vote_down_answer(answer_id)
     return redirect(url_for('question', id = question_id))
+
+@app.route('/question/<question_id>/new_question_comment', methods = ["POST", "GET"])
+def new_question_comment(question_id):
+    if request.method == "POST":
+        comment = request.form
+        sql_manager.create_comment_for_question(question_id, comment)
+        return redirect(url_for('question', id = question_id))
+    else:
+        return render_template('add_comment_for_question.html', question_id = question_id)
+    
+@app.route('/answer/<answer_id>')
+def answer(answer_id):
+    answer = sql_manager.get_answer(answer_id)
+    comments = sql_manager.get_answer_comments(answer_id)
+    return render_template('answer.html', answer = answer, answer_headers = data_const.ANSWER_HEADERS,
+    comments = comments ,comment_headers = data_const.COMMENT_HEADERS)
+
+@app.route('/answer/<answer_id>/new_answer_comment', methods = ["POST", "GET"])
+def new_answer_comment(answer_id):
+    if request.method == "POST":
+        comment = request.form
+        sql_manager.create_comment_for_answer(answer_id, comment)
+        return redirect(url_for('answer', answer_id = answer_id))
+    else:
+        return render_template('add_comment_for_answer.html', answer_id = answer_id)
+
+@app.route('/answer/<answer_id>/edit', methods = ["POST", "GET"])
+def edit_answer(answer_id):
+    answer = sql_manager.get_answer(answer_id)
+    if request.method == "POST":
+        edited_data = request.form
+        sql_manager.edit_answer(answer_id, edited_data)
+        return redirect(url_for('answer', answer_id = answer_id))
+    else:
+        return render_template('edit_answer.html', answer = answer)
+
+@app.route('/question_comment/<comment_id>/edit', methods = ["POST", "GET"])
+def edit_question_comment(comment_id):
+    comment = sql_manager.get_comment(comment_id)
+    if request.method == "POST":
+        edited_data = request.form
+        sql_manager.edit_comment(comment_id, edited_data)
+        return redirect(url_for('question', id = comment[0]['question_id']))
+    else:
+        return render_template('edit_question_comment.html', comment_id = comment_id, comment = comment)
+    
+@app.route('/answer_comment/<comment_id>/edit', methods = ["POST", "GET"])
+def edit_answer_comment(comment_id):
+    comment = sql_manager.get_comment(comment_id)
+    if request.method == "POST":
+        edited_data = request.form
+        sql_manager.edit_comment(comment_id, edited_data)
+        return redirect(url_for('answer', answer_id = comment[0]['answer_id']))
+    else:
+        return render_template('edit_answer_comment.html', comment_id = comment_id, comment = comment)
+    
+@app.route('/comments/<comment_id>/delete')
+def delete_quesion_comment(comment_id):
 
 if __name__ == "__main__":
     app.run(

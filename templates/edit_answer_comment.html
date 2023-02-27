@@ -1,0 +1,23 @@
+<html>
+<head>
+    <title>Edit comment ID {{comment_id}}</title>
+    <meta keywords.="story agile">
+</head>
+<style>
+    body {background-color: powderblue;}
+    table, th, td {
+      border:1px solid black;
+    }
+</style>
+<body>
+    <h1>Edit comment ID {{comment_id}}</h1>   
+    <form action="edit", method="POST">
+        <label>Comment message</label>
+        <input type="text", name="message" placeholder = {{comment[0]['message']}}>
+        <br>
+        <input type="submit", value="Edit comment"/>
+    </form>
+
+    <a href="{{ url_for( 'answer', answer_id = comment[0]['answer_id'] ) }}">return</a>
+</body>
+</html>
