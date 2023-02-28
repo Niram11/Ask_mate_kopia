@@ -1,9 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for
-from data_manager import sql_manager, data_const
+from data_manager import sql_manager, data_const, support_functions
 
 app = Flask(__name__)
 
-
+@app.route('/')
+def main_page():
+    questions = sql_manager.get_latest()
+    return render_template('main_page.html', questions = questions, headers = data_const.QUESTIONS_HEADERS)
 
 @app.route('/list')
 def list_questions():
@@ -25,8 +28,10 @@ def question(id):
     question = sql_manager.get_question(id)
     answers = sql_manager.get_answers_for_question(id)
     comments = sql_manager.get_question_comments(id)
+    tags = sql_manager.get_qustion_tags(id)
     return render_template('question.html', question = question, question_headers = data_const.QUESTIONS_HEADERS,
-    answers = answers, answer_headers = data_const.ANSWER_HEADERS, comments = comments, comment_headers = data_const.COMMENT_HEADERS)
+    answers = answers, answer_headers = data_const.ANSWER_HEADERS, comments = comments, comment_headers = data_const.COMMENT_HEADERS,
+    tags = tags)
 
 @app.route('/question/<question_id>/new_answer', methods = ["POST", "GET"])
 def new_answer(question_id):
@@ -133,8 +138,29 @@ def edit_answer_comment(comment_id):
     else:
         return render_template('edit_answer_comment.html', comment_id = comment_id, comment = comment)
     
-@app.route('/comments/<comment_id>/delete')
-def delete_quesion_comment(comment_id):
+@app.route('/question_comment/<comment_id>/delete')
+def delete_question_comment(comment_id):
+    question_id = sql_manager.delete_question_comment(comment_id)
+    return redirect(url_for('question', id = question_id))
+
+@app.route('/answer_comment/<comment_id>/delete')
+def delete_answer_comment(comment_id):
+    answer_id = sql_manager.delete_question_comment(comment_id)
+    return redirect(url_for('answer', answer_id = answer_id))
+
+@app.route('/question/<question_id>/add_tag', methods = ["POST", "GET"])
+def add_tag(question_id):
+    if request.method == "POST":
+        new_tag = request.form
+        support_functions.add_tag(new_tag['tag'], question_id)
+        return redirect(url_for('question', id = question_id))
+    else:
+        return render_template('add_tag.html', question_id = question_id)
+
+@app.route('/question/<question_id>/tag/<tag_id>/delete')
+def delete_tag(question_id, tag_id):
+    sql_manager.delete_question_tag(question_id, tag_id)
+    return redirect(url_for('question', id = question_id))
 
 if __name__ == "__main__":
     app.run(

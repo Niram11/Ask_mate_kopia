@@ -1,0 +1,23 @@
+<html>
+<head>
+    <title>Add tag for question ID {{question_id}}</title>
+    <meta keywords.="story agile">
+</head>
+<style>
+    body {background-color: powderblue;}
+    table, th, td {
+      border:1px solid black;
+    }
+</style>
+<body>
+    <h1>Add tag for question ID {{question_id}}</h1>   
+    <form action="add_tag", method="POST">
+        <label>Tag</label>
+        <input type="text", name="tag"/>
+        <br>
+        <input type="submit", value="Add Tag"/>
+    </form>
+
+    <a href="{{ url_for( 'question', id = question_id ) }}">Return</a>
+</body>
+</html>

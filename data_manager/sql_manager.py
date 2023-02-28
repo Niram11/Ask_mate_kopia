@@ -59,6 +59,8 @@ def delete_question(question_id):
     cursor = conn.cursor()
     cursor.execute(f"DELETE FROM questions WHERE id = {question_id};")
     cursor.execute(f"DELETE FROM answers WHERE question_id = {question_id};")
+    cursor.execute(f"DELETE FROM comments WHERE question_id = {question_id};")
+    cursor.execute(f"DELETE FROM question_tags WHERE question_id = {question_id}")
 
 def edit_question(question_id, edited_data):
     conn = psycopg2.connect(database = 'postgres', user = 'postgres', password = 'postgres')
@@ -76,6 +78,7 @@ def delete_answer(answer_id):
     cursor.execute(f"SELECT * from answers WHERE id = {answer_id};")
     data = cursor.fetchall()
     cursor.execute(f"DELETE FROM answers WHERE id = {answer_id};")
+    cursor.execute(f"DELETE FROM comments WHERE answer_id = {answer_id};")
     return data
 
 def vote_up_question(question_id):
@@ -174,7 +177,11 @@ def create_comment_for_answer(answer_id, comment):
     conn = psycopg2.connect(database = 'postgres', user = 'postgres', password = 'postgres')
     conn.autocommit = True
     cursor = conn.cursor(cursor_factory = RealDictCursor)
-    cursor.execute(f"INSERT into comments values({id}, 0, {answer_id}, '{comment['message']}', '{timestamp}', 0);")
+    cursor.execute(f"""SELECT * from answers
+    WHERE id = {answer_id}""")
+    data = cursor.fetchall()
+    cursor.execute(f"""INSERT into comments values({id}, {data[0]['question_id']}, {answer_id},
+                    '{comment['message']}', '{timestamp}', 0);""")
 
 def edit_answer(answer_id, edited_data):
     conn = psycopg2.connect(database = 'postgres', user = 'postgres', password = 'postgres')
@@ -203,3 +210,72 @@ def edit_comment(comment_id, edited_data):
     SET message = '{edited_data['message']}',
     edited_numbers = {data[0]['edited_numbers'] + 1}
     WHERE id = {comment_id};""")
+
+def delete_question_comment(comment_id):
+    conn = psycopg2.connect(database = 'postgres', user = 'postgres', password = 'postgres')
+    conn.autocommit = True
+    cursor = conn.cursor(cursor_factory = RealDictCursor)
+    cursor.execute(f"SELECT * from comments WHERE id = {comment_id};")
+    data = cursor.fetchall()
+    cursor.execute(f"DELETE FROM comments WHERE id = {comment_id};")
+    return data[0]['question_id']
+
+def delete_answer_comment(comment_id):
+    conn = psycopg2.connect(database = 'postgres', user = 'postgres', password = 'postgres')
+    conn.autocommit = True
+    cursor = conn.cursor(cursor_factory = RealDictCursor)
+    cursor.execute(f"SELECT * from comments WHERE id = {comment_id};")
+    data = cursor.fetchall()
+    cursor.execute(f"DELETE FROM comments WHERE id = {comment_id};")
+    return data[0]['answer_id']
+
+def get_latest():
+    conn = psycopg2.connect(database = 'postgres', user = 'postgres', password = 'postgres')
+    conn.autocommit = True
+    cursor = conn.cursor(cursor_factory = RealDictCursor)
+    cursor.execute("""SELECT * from questions
+    ORDER BY submision_time DESC
+    LIMIT 5""")
+    data = cursor.fetchall()
+    return data
+
+def get_tags():
+    conn = psycopg2.connect(database = 'postgres', user = 'postgres', password = 'postgres')
+    conn.autocommit = True
+    cursor = conn.cursor(cursor_factory = RealDictCursor)
+    cursor.execute("SELECT * from tags")
+    data = cursor.fetchall()
+    return data
+
+def add_tag_to_question(tag_id, question_id):
+    conn = psycopg2.connect(database = 'postgres', user = 'postgres', password = 'postgres')
+    conn.autocommit = True
+    cursor = conn.cursor(cursor_factory = RealDictCursor)
+    cursor.execute(f"INSERT into question_tags values({question_id}, {tag_id})")
+
+def create_new_tag(new_tag):
+    new_id = generate_new_id('tags')
+    conn = psycopg2.connect(database = 'postgres', user = 'postgres', password = 'postgres')
+    conn.autocommit = True
+    cursor = conn.cursor(cursor_factory = RealDictCursor)
+    cursor.execute(f"INSERT into tags values({new_id}, '{new_tag}')")
+    return new_id
+
+def get_qustion_tags(question_id):
+    conn = psycopg2.connect(database = 'postgres', user = 'postgres', password = 'postgres')
+    conn.autocommit = True
+    cursor = conn.cursor(cursor_factory = RealDictCursor)
+    cursor.execute(f"""SELECT * FROM question_tags
+        RIGHT JOIN tags
+	    ON question_tags.tag_id = tags.id
+        WHERE question_id = {question_id};""")
+    data = cursor.fetchall()
+    return data
+
+def delete_question_tag(question_id, comment_id):
+    conn = psycopg2.connect(database = 'postgres', user = 'postgres', password = 'postgres')
+    conn.autocommit = True
+    cursor = conn.cursor(cursor_factory = RealDictCursor)
+    cursor.execute(f"""DELETE FROM question_tags 
+        WHERE question_id = {question_id} 
+        AND tag_id = {comment_id}""")
