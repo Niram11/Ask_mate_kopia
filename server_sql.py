@@ -10,7 +10,12 @@ def main_page():
 
 @app.route('/list')
 def list_questions():
-    questions = sql_manager.get_questions()
+    order_by = request.args.get('order_by')
+    order_direction = request.args.get('order_direction')
+    if (order_by or order_direction) == None:
+        questions = sql_manager.get_questions()
+    else:
+        questions = sql_manager.get_sorted_questions(order_by, order_direction)
     return render_template('list.html', questions = questions, headers = data_const.QUESTIONS_HEADERS)
 
 @app.route('/add_question', methods = ["POST", "GET"])
@@ -161,6 +166,12 @@ def add_tag(question_id):
 def delete_tag(question_id, tag_id):
     sql_manager.delete_question_tag(question_id, tag_id)
     return redirect(url_for('question', id = question_id))
+
+@app.route('/search')
+def search():
+    search = request.args.get('search')
+    results = sql_manager.search_in_questions(search)
+    return render_template('search.html', search = search, results = results, headers = data_const.QUESTIONS_HEADERS)
 
 if __name__ == "__main__":
     app.run(

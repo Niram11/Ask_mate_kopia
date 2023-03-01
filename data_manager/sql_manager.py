@@ -217,3 +217,14 @@ def delete_question_tag(question_id, comment_id):
         WHERE question_id = {question_id} 
         AND tag_id = {comment_id}""")
     insert_data_to_sql(command)
+
+def search_in_questions(search):
+    command = (f"""SELECT * from questions
+        WHERE title LIKE '%{search}%'
+        OR message LIKE '%{search}%'""")
+    return get_data_from_sql(command)
+
+def get_sorted_questions(order_by, order_direction):
+    commend = (f"""SELECT * from questions
+        ORDER BY {order_by} {order_direction}""")
+    return get_data_from_sql(commend)

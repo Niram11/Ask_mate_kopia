@@ -1,0 +1,38 @@
+<html>
+<head>
+    <title>Results for the search "{{search}}"</title>
+    <meta keywords.="story agile">
+</head>
+<style>
+    body {background-color: powderblue;}
+    table, th, td {
+      border:1px solid black;
+    }
+</style>
+<body>
+    <h1>Results for the search "{{search}}"</h1>
+    <table style="width:100%">
+        <tr>
+        {% for header in headers %}
+        <th>{{header}}</th>
+        {% endfor %}
+        <th></th>
+        </tr>
+        <tr>
+        {% for result in results %}
+        <td>{{result['id']}}</td>
+        <td>{{result['submision_time']}}</td>
+        <td>{{result['view_number']}}</td>
+        <td>{{result['vote_number']}}</td>
+        <td>{{result['title']}}</td>
+        <td>{{result['message']}}</td>
+        <td>{{result['image']}}</td>
+        <td><a href="{{ url_for( 'question', id = result['id'] ) }}">View question</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="/">Back to main page</a>
+    <br>
+    <a href="/list">View all questions</a>
+</body>
+</html>

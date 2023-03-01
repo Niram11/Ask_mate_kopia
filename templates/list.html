@@ -11,6 +11,22 @@
 </style>
 <body>
     <h1>List of questions</h1>
+
+    <form action="list", method="GET">
+        <label>Sort by:</label>
+        <select name="order_by">
+            <option value="id">Question ID</option>
+            <option value="submision_time">Submision time</option>
+            <option value="view_number">View number</option>
+            <option value="vote_number">Vote number</option>
+          </select>
+          <select name="order_direction">
+            <option value="ASC">Ascending</option>
+            <option value="DESC">Descending</option>
+          </select>
+        <input type="submit", value="Sort"/>
+    </form>
+
     <table style="width:100%">
         <tr>
         {% for header in headers %}

@@ -33,8 +33,14 @@
         </tr>
         {% endfor %}
     </table>
-<a href="/list">View all questions</a>
-<br>
-<a href="/add_question">Add_question</a>
+    <br>
+    <form action="search", method="GET">
+        <label>Search</label>
+        <input type="text", name="search" required>
+        <input type="submit", value="Search"/>
+    </form>
+    <a href="/list">View all questions</a>
+    <br>
+    <a href="/add_question">Add_question</a>
 </body>
 </html>
