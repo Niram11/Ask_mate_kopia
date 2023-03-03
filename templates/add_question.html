@@ -2,33 +2,8 @@
 <head>
     <title>Add question</title>
     <meta keywords.="story agile">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/static.css') }}">
 </head>
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
-
-    body {background: rgb(169,187,251);
-    background: linear-gradient(189deg, rgba(169,187,251,1) 3%, rgba(129,221,252,1) 43%, rgba(144,234,252,1) 100%);}
-    .buttons {
-        padding-left: 25px;
-        padding-right: 25px;
-        padding-top: 2px;
-        padding-bottom: 2px;
-        background-color: rgb(179, 190, 245);
-        border: none;
-        border-radius: 7px;
-        cursor: pointer;
-        transition: background-color 1s;
-        transition: box-shadow 1s;
-        box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.3);
-        margin-right: 4px;
-        margin-top: 2px;
-        margin-bottom: 2px;
-      }
-      .buttons:hover{
-        background-color: rgb(128, 146, 238);
-        box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.7);
-      }
-</style>
 <body>
     <h1>Add question</h1>   
     <form action="add_question", method="POST">
