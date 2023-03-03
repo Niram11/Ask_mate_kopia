@@ -4,20 +4,39 @@
     <meta keywords.="story agile">
 </head>
 <style>
-    body {background-color: powderblue;}
-    table, th, td {
-      border:1px solid black;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
+    body {background: rgb(169,187,251);
+    background: linear-gradient(189deg, rgba(169,187,251,1) 3%, rgba(129,221,252,1) 43%, rgba(144,234,252,1) 100%);}
+    .buttons {
+        padding-left: 25px;
+        padding-right: 25px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        background-color: rgb(179, 190, 245);
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition: background-color 1s;
+        transition: box-shadow 1s;
+        box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.3);
+        margin-right: 4px;
+        margin-top: 2px;
+        margin-bottom: 2px;
+      }
+      .buttons:hover{
+        background-color: rgb(128, 146, 238);
+        box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.7);
+      }
 </style>
 <body>
     <h1>Add tag for question ID {{question_id}}</h1>   
     <form action="add_tag", method="POST">
-        <label>Tag</label>
+        <label>Tag :</label>
         <input type="text", name="tag"/>
         <br>
-        <input type="submit", value="Add Tag"/>
+        <input class="buttons" type="submit", value="Add Tag"/>
     </form>
-
-    <a href="{{ url_for( 'question', id = question_id ) }}">Return</a>
+    <button class="buttons"type="button" onclick="location.href='{{ url_for( 'question', id = question_id ) }}'">Return</button>
 </body>
 </html>

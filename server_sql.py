@@ -34,6 +34,7 @@ def question(id):
     answers = sql_manager.get_answers_for_question(id)
     comments = sql_manager.get_question_comments(id)
     tags = sql_manager.get_qustion_tags(id)
+    print(tags == [])
     return render_template('question.html', question = question, question_headers = data_const.QUESTIONS_HEADERS,
     answers = answers, answer_headers = data_const.ANSWER_HEADERS, comments = comments, comment_headers = data_const.COMMENT_HEADERS,
     tags = tags)

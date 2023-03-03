@@ -4,29 +4,81 @@
     <meta keywords.="story agile">
 </head>
 <style>
-    body {background-color: powderblue;}
-    table, th, td {
-      border:1px solid black;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
+    body {background: rgb(169,187,251);
+    background: linear-gradient(189deg, rgba(169,187,251,1) 3%, rgba(129,221,252,1) 43%, rgba(144,234,252,1) 100%);}
+    table {
+        background: #fafafa;
+        border-collapse: collapse;
+        text-align: center;
+        border-spacing: 0;
+        border-radius: 10px 10px 0 0;
+        overflow: hidden;
+        box-shadow: 0 2px 12px rgba(32,32,32,.3);
+      }
+      th,td {
+        padding: 10px 12px;
+      }
+      th{
+        background-color: gray;
+        font-family: 'Roboto', sans-serif;
+      }
+      td {
+        font-family: 'Open Sans',sans-serif;
+      }
+      tr:nth-child(odd) {
+        background-color: #eeeeee;
+      }
+      .buttons {
+        padding-left: 25px;
+        padding-right: 25px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        background-color: rgb(179, 190, 245);
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition: background-color 1s;
+        transition: box-shadow 1s;
+        box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.3);
+        margin-right: 4px;
+        margin-top: 2px;
+        margin-bottom: 2px;
+      }
+      .buttons:hover{
+        background-color: rgb(128, 146, 238);
+        box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.7);
+      }
 </style>
 <body>
     <h1>Question ID {{question[0]['id']}}</h1>
 
     <h3>Tags</h3>
-    <table>
-        <tr>
-            <th>
-                {% for tag in tags %}
-                {{tag['name']}}
-                <a1>&nbsp;</a1>
-                <a href="{{ url_for( 'delete_tag', tag_id = tag['tag_id'], question_id = tag['question_id'])}}">X</a>
-                <a1>|</a1>
-                {% endfor %}
-            </th>
-        </tr>
-    </table>
-    <a href="{{ url_for( 'add_tag', question_id = question[0]['id'] )}}">Add tag</a>
+    {% if tags == [] %}
+    <a>There are no tags yet.</a>
     <br>
+    <a>Add a new one</a>
+    <button class="buttons"type="button" onclick="location.href='{{ url_for( 'add_tag', question_id = question[0]['id'] )}}'">Add tag</button>
+    <br>
+    {% else %}
+    <table>
+      <tr>
+          <th>
+              {% for tag in tags %}
+              {{tag['name']}}
+              <a1>&nbsp;</a1>
+              <a href="{{ url_for( 'delete_tag', tag_id = tag['tag_id'], question_id = tag['question_id'])}}">X</a>
+              <a1>|</a1>
+              {% endfor %}
+          </th>
+      </tr>
+  </table>
+  <br>
+  <button class="buttons"type="button" onclick="location.href='{{ url_for( 'add_tag', question_id = question[0]['id'] )}}'">Add tag</button>
+  <br>
+    {% endif %}
+
     <br>
     <table style="width:100%">
         <tr>
@@ -46,13 +98,11 @@
         </tr>
         {% endfor %}
     </table>
-    <a href="{{ url_for( 'question_edit', question_id = question[0]['id'] )}}">Edit question</a>
     <br>
-    <a href="{{ url_for( 'question_delete', question_id = question[0]['id'] )}}">Delete question</a>
-    <br>
-    <a href="{{ url_for( 'question_vote_up', question_id = question[0]['id'] )}}">Vote up question</a>
-    <br>
-    <a href="{{ url_for( 'question_vote_down', question_id = question[0]['id'] )}}">Vote down question</a>
+    <button class="buttons"type="button" onclick="location.href='{{ url_for( 'question_edit', question_id = question[0]['id'] )}}'">Edit question</button>
+    <button class="buttons"type="button" onclick="location.href='{{ url_for( 'question_delete', question_id = question[0]['id'] )}}'">Delete question</button>
+    <button class="buttons"type="button" onclick="location.href='{{ url_for( 'question_vote_up', question_id = question[0]['id'] )}}'">Vote up question</button>
+    <button class="buttons"type="button" onclick="location.href='{{ url_for( 'question_vote_down', question_id = question[0]['id'] )}}'">Vote down question</button>
 
     <h1>Comments</h1>
     <table style="width:100%">
@@ -68,13 +118,15 @@
             <td>{{comment['submision_time']}}</td>
             <td>{{comment['message']}}</td>
             <td>{{comment['edited_numbers']}}</td>
-            <td><a href="{{ url_for( 'edit_question_comment', comment_id = comment['id'] )}}">Edit comment</a>
-            <br>
-            <a href="{{ url_for( 'delete_question_comment', comment_id = comment['id'] )}}">Delete comment</a></td>
+            <td>
+                <button class="buttons"type="button" onclick="location.href='{{ url_for( 'edit_question_comment', comment_id = comment['id'] )}}'">Edit comment</button>
+                <br>
+                <button class="buttons"type="button" onclick="location.href='{{ url_for( 'delete_question_comment', comment_id = comment['id'] )}}'">Delete comment</button>
         </tr>
             {% endfor %}
     </table>
-    <a href="{{ url_for( 'new_question_comment', question_id = question[0]['id'] )}}">Add comment</a>
+    <br>
+    <button class="buttons"type="button" onclick="location.href='{{ url_for( 'new_question_comment', question_id = question[0]['id'] )}}'">Add comment</button>
 
 
 
@@ -93,21 +145,22 @@
         <td>{{answer['vote_number']}}</td>
         <td>{{answer['message']}}</td>
         <td>{{answer['image']}}</td>
-        <td><a href="{{ url_for( 'answer_delete', answer_id = answer['id'])}}">Delete answer</a>
+        <td>
+            <button class="buttons"type="button" onclick="location.href='{{ url_for( 'answer_delete', answer_id = answer['id'])}}'">Delete answer</button>
             <br>
-            <a href="{{ url_for( 'answer_vote_up', answer_id = answer['id'] )}}">Vote up answer</a>
+            <button class="buttons"type="button" onclick="location.href='{{ url_for( 'answer_vote_up', answer_id = answer['id'] )}}'">Vote up answer</button>
             <br>
-            <a href="{{ url_for( 'answer_vote_down', answer_id = answer['id'] )}}">Vote down answer</a>
+            <button class="buttons"type="button" onclick="location.href='{{ url_for( 'answer_vote_down', answer_id = answer['id'] )}}'">Vote down answer</button>
             <br>
-            <a href="{{ url_for( 'answer', answer_id = answer['id'] )}}">View answer</a>
+            <button class="buttons"type="button" onclick="location.href='{{ url_for( 'answer', answer_id = answer['id'] )}}'">View answer</button>
+            
         </td>
         </tr>
         {% endfor %}
     </table>
-    <a href="{{ url_for( 'new_answer', question_id = question[0]['id'] )}}">Add new answer</a>
     <br>
-    <a href="/list">return</a>
-    <br>
-    <a href="/">Back to main page</a>
+    <button class="buttons"type="button" onclick="location.href='{{ url_for( 'new_answer', question_id = question[0]['id'] )}}'">Add new answer</button>
+    <button class="buttons"type="button" onclick="location.href='/list'">Return</button>
+    <button class="buttons"type="button" onclick="location.href='/'">Back to main page</button>
 </body>
 </html>
