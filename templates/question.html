@@ -104,6 +104,15 @@
     <button class="buttons"type="button" onclick="location.href='{{ url_for( 'question_vote_up', question_id = question[0]['id'] )}}'">Vote up question</button>
     <button class="buttons"type="button" onclick="location.href='{{ url_for( 'question_vote_down', question_id = question[0]['id'] )}}'">Vote down question</button>
 
+    {% if comments == [] %}
+      <br><br><br>
+      <h1>Comments</h1>
+      <a>There are no comments yet.</a>
+      <br>
+      <a>Add a new one</a>
+      <button class="buttons"type="button" onclick="location.href='{{ url_for( 'new_question_comment', question_id = question[0]['id'] )}}'">Add comment</button>
+
+    {% else %}
     <h1>Comments</h1>
     <table style="width:100%">
         <tr>
@@ -127,37 +136,44 @@
     </table>
     <br>
     <button class="buttons"type="button" onclick="location.href='{{ url_for( 'new_question_comment', question_id = question[0]['id'] )}}'">Add comment</button>
-
+    {% endif %}
 
 
     <h1>Answers</h1>
+    {% if answers == [] %}
+    <a>There are no answers yet.</a>
+    <br>
+    <a>Add a new one</a>
+    {% else %}
     <table style="width:100%">
-    <tr>
-        {% for header in answer_headers %}
-        <th>{{header}}</th>
-        {% endfor %}
-        <th></th>
-    </tr>
-    <tr>
-        {% for answer in answers %}
-        <td>{{answer['id']}}</td>
-        <td>{{answer['submision_time']}}</td>
-        <td>{{answer['vote_number']}}</td>
-        <td>{{answer['message']}}</td>
-        <td>{{answer['image']}}</td>
-        <td>
-            <button class="buttons"type="button" onclick="location.href='{{ url_for( 'answer_delete', answer_id = answer['id'])}}'">Delete answer</button>
-            <br>
-            <button class="buttons"type="button" onclick="location.href='{{ url_for( 'answer_vote_up', answer_id = answer['id'] )}}'">Vote up answer</button>
-            <br>
-            <button class="buttons"type="button" onclick="location.href='{{ url_for( 'answer_vote_down', answer_id = answer['id'] )}}'">Vote down answer</button>
-            <br>
-            <button class="buttons"type="button" onclick="location.href='{{ url_for( 'answer', answer_id = answer['id'] )}}'">View answer</button>
-            
-        </td>
-        </tr>
-        {% endfor %}
-    </table>
+      <tr>
+          {% for header in answer_headers %}
+          <th>{{header}}</th>
+          {% endfor %}
+          <th></th>
+      </tr>
+      <tr>
+          {% for answer in answers %}
+          <td>{{answer['id']}}</td>
+          <td>{{answer['submision_time']}}</td>
+          <td>{{answer['vote_number']}}</td>
+          <td>{{answer['message']}}</td>
+          <td>{{answer['image']}}</td>
+          <td>
+              <button class="buttons"type="button" onclick="location.href='{{ url_for( 'answer_delete', answer_id = answer['id'])}}'">Delete answer</button>
+              <br>
+              <button class="buttons"type="button" onclick="location.href='{{ url_for( 'answer_vote_up', answer_id = answer['id'] )}}'">Vote up answer</button>
+              <br>
+              <button class="buttons"type="button" onclick="location.href='{{ url_for( 'answer_vote_down', answer_id = answer['id'] )}}'">Vote down answer</button>
+              <br>
+              <button class="buttons"type="button" onclick="location.href='{{ url_for( 'answer', answer_id = answer['id'] )}}'">View answer</button>
+              
+          </td>
+          </tr>
+          {% endfor %}
+      </table>
+    {% endif %}
+
     <br>
     <button class="buttons"type="button" onclick="location.href='{{ url_for( 'new_answer', question_id = question[0]['id'] )}}'">Add new answer</button>
     <button class="buttons"type="button" onclick="location.href='/list'">Return</button>

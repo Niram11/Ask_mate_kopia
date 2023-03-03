@@ -75,26 +75,34 @@
 
 
     <h1>Answers</h1>
+    {% if comments == [] %}
+      <a>There are no comments yet.</a>
+      <br>
+      <a>Add a new one</a>
+      <br>
+    {% else %}
     <table style="width:100%">
-        <tr>
-            {% for header in comment_headers %}
-            <th>{{header}}</th>
-            {% endfor %}
-            <th></th>
-        </tr>
-        <tr>
-            {% for comment in comments %}
-            <td>{{comment['id']}}</td>
-            <td>{{comment['submision_time']}}</td>
-            <td>{{comment['message']}}</td>
-            <td>{{comment['edited_numbers']}}</td>
-            <td>
-            <button class="buttons" type="button" onclick="location.href='{{ url_for( 'edit_answer_comment', comment_id = comment['id'] )}}'">Edit comment</button>
-            <br>
-            <button class="buttons" type="button" onclick="location.href='{{ url_for( 'delete_answer_comment', comment_id = comment['id'] )}}'">Delete comment</button>
-        </tr>
-            {% endfor %}
-    </table> 
+      <tr>
+          {% for header in comment_headers %}
+          <th>{{header}}</th>
+          {% endfor %}
+          <th></th>
+      </tr>
+      <tr>
+          {% for comment in comments %}
+          <td>{{comment['id']}}</td>
+          <td>{{comment['submision_time']}}</td>
+          <td>{{comment['message']}}</td>
+          <td>{{comment['edited_numbers']}}</td>
+          <td>
+          <button class="buttons" type="button" onclick="location.href='{{ url_for( 'edit_answer_comment', comment_id = comment['id'] )}}'">Edit comment</button>
+          <br>
+          <button class="buttons" type="button" onclick="location.href='{{ url_for( 'delete_answer_comment', comment_id = comment['id'] )}}'">Delete comment</button>
+      </tr>
+          {% endfor %}
+  </table> 
+    {% endif %}
+    
 
     <button class="buttons" type="button" onclick="location.href='{{ url_for( 'new_answer_comment', answer_id = answer[0]['id'] ) }}'">Add comment</button>
     <button class="buttons" type="button" onclick="location.href='{{ url_for( 'question', id = answer[0]['question_id'] ) }}'">Return</button>

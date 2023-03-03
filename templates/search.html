@@ -52,6 +52,10 @@
       }
 </style>
 <body>
+    {% if results == [] %}
+      <h1>No results for "{{search}}"</h1>
+      <br>
+    {% else %}
     <h1>Results for the search "{{search}}"</h1>
     <table style="width:100%">
         <tr>
@@ -73,6 +77,14 @@
         </tr>
         {% endfor %}
     </table>
+    {% endif %}
+    <br>
+    <form action="search", method="GET">
+      <label class="text">Search</label>
+      <input type="text", name="search" required>
+      <input class="buttons"type="submit", value="Search"/>
+  </form>
+
     <button class="buttons"type="button" onclick="location.href='/'">Back to main page</button>
     <button class="buttons"type="button" onclick="location.href='/list'">View all questions</button>
 </body>

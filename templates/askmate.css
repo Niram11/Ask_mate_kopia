@@ -1,23 +1,53 @@
-body {background-color: powderblue;}
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
+      body {background: rgb(169,187,251);
+background: linear-gradient(189deg, rgba(169,187,251,1) 3%, rgba(129,221,252,1) 43%, rgba(144,234,252,1) 100%);}
   
-table, th, td {
-  border:1px solid black;
-}
+      table {
+        background: #fafafa;
+        border-collapse: collapse;
+        text-align: center;
+        border-spacing: 0;
+        border-radius: 10px 10px 0 0;
+        overflow: hidden;
+        box-shadow: 0 2px 12px rgba(32,32,32,.3);
+      }
 
-.buttons {
-  height: 20;
-  width: 80;
-  background-color: rgb(179, 190, 245);
-  border: none;
-  border-radius: 7px;
-  cursor: pointer;
-  transition: background-color 1s;
-  box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.532);
-}
+      th,td {
+        padding: 10px 12px;
+      }
 
-.buttons:hover{
-  background-color: rgb(128, 146, 238);
-}
-.text{
-  font-family: Arial, Helvetica, sans-serif;
-}
+      th{
+        background-color: gray;
+        font-family: 'Roboto', sans-serif;
+      }
+  
+      td {
+        font-family: 'Open Sans',sans-serif;
+      }
+
+      tr:nth-child(odd) {
+        background-color: #eeeeee;
+      }
+
+      .buttons {
+        padding-left: 25px;
+        padding-right: 25px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        background-color: rgb(179, 190, 245);
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        transition: background-color 1s;
+        transition: box-shadow 1s;
+        box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.3);
+      }
+  
+      .buttons:hover{
+        background-color: rgb(128, 146, 238);
+        box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.7);
+      }
+      .text{
+        font-family: Arial, Helvetica, sans-serif;
+      }
