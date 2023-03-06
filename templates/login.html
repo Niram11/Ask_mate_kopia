@@ -1,0 +1,23 @@
+<html>
+<head>
+    <title>Login</title>
+    <meta keywords.="story agile">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/static.css') }}">
+</head>
+<body>
+    <h1>Login</h1>   
+    <form action="login", method="POST">
+        <label>Nickname:</label>
+        <input type="text" name="nickname"/>
+        <br>
+        <label>Password</label>
+        <input type="password", name="password"/>
+        <br>
+        <input class="buttons" type="submit", value="Login"/>
+    </form>
+
+    <button class="buttons"type="button" onclick="location.href='/'">Return</button>
+
+
+</body>
+</html>
