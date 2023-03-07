@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for
 from data_manager import sql_manager, data_const, support_functions
 
 app = Flask(__name__)
+#TODO
+#Komentarze z odpowiedzi wchodzą do komentarzy z pytań
 
 @app.route('/')
 def main_page():
@@ -173,6 +175,22 @@ def search():
     search = request.args.get('search')
     results = sql_manager.search_in_questions(search)
     return render_template('search.html', search = search, results = results, headers = data_const.QUESTIONS_HEADERS)
+
+@app.route('/register', methods = ["POST", "GET"])
+def register():
+    if request.method == "POST":
+        sql_manager.register(request.form)
+        return redirect(url_for('main_page'))
+    else:
+        return render_template('register.html')
+
+@app.route('/login', methods = ["POST", "GET"])
+def login():
+    if request.method == "POST":
+        return 'loged in'
+    else:
+        return render_template('login.html')
+    
 
 if __name__ == "__main__":
     app.run(

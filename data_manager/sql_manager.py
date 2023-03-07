@@ -228,3 +228,22 @@ def get_sorted_questions(order_by, order_direction):
     commend = (f"""SELECT * from questions
         ORDER BY {order_by} {order_direction}""")
     return get_data_from_sql(commend)
+
+#TODO dodanie strony lub innego sposobu kominikowania o dublującym się użytkowniku
+def register(registration_data):
+    if check_for_existing_user(registration_data['nickname']):
+        print('Użytkownik istnieje')
+        return
+    timestamp = support_functions.get_timestamp()
+    password = support_functions.secure_password(registration_data['password'])
+    command = (f"INSERT into users values( '{registration_data['nickname']}', '{password}', '{timestamp}');")
+    insert_data_to_sql(command)
+
+def check_for_existing_user(nickname):
+    commend = ("SELECT username from users")
+    all_users = get_data_from_sql(commend)
+    for i in all_users:
+        if i['username'] == nickname:
+            return True
+    else:
+        return False
