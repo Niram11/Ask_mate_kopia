@@ -1,9 +1,13 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from data_manager import sql_manager, data_const, support_functions
 
 app = Flask(__name__)
+
+app.secret_key = b'1234567890'
+
 #TODO
 #Komentarze z odpowiedzi wchodzą do komentarzy z pytań
+#poprawić url for w templatkach xD
 
 @app.route('/')
 def main_page():
@@ -187,9 +191,24 @@ def register():
 @app.route('/login', methods = ["POST", "GET"])
 def login():
     if request.method == "POST":
-        return 'loged in'
+        if support_functions.login(request.form):
+            session['username'] = request.form['username']
+            return redirect(url_for('main_page'))
+        else:
+            return redirect(url_for('main_page'))
     else:
         return render_template('login.html')
+    
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('main_page'))
+
+@app.route('/users')
+def users():
+    users = sql_manager.get_users()
+    print(users)
+    return render_template('users.html', users = users, headers = data_const.USERS_HEADERS)
     
 
 if __name__ == "__main__":

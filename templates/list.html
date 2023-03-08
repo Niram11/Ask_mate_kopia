@@ -44,8 +44,12 @@
         {% endfor %}
     </table>
     <br>
+    {% if session['username'] %}
     <button class="buttons"type="button" onclick="location.href='/add_question'">Add question</button>
     <button class="buttons"type="button" onclick="location.href='/'">Back to main page</button>
+    {% else %}
+    <button class="buttons"type="button" onclick="location.href='/'">Back to main page</button>
+    {% endif %}
 
 </body>
 </html>
