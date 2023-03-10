@@ -47,6 +47,7 @@
         {% for que in question %}
         <td>{{que['id']}}</td>
         <td>{{que['submision_time']}}</td>
+        <td>{{que['username']}}</td>
         <td>{{que['view_number']}}</td>
         <td>{{que['vote_number']}}</td>
         <td>{{que['title']}}</td>
@@ -93,6 +94,7 @@
             {% for comment in comments %}
             <td>{{comment['id']}}</td>
             <td>{{comment['submision_time']}}</td>
+            <td>{{comment['username']}}</td>
             <td>{{comment['message']}}</td>
             <td>{{comment['edited_numbers']}}</td>
             {% if session['username'] %}
@@ -134,6 +136,7 @@
           {% for answer in answers %}
           <td>{{answer['id']}}</td>
           <td>{{answer['submision_time']}}</td>
+          <td>{{answer['username']}}</td>
           <td>{{answer['vote_number']}}</td>
           <td>{{answer['message']}}</td>
           <td>{{answer['image']}}</td>

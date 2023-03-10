@@ -12,6 +12,7 @@
             <br>
             <label>Question message</label>
             <input type="text", name="message"/>
+            <input type="hidden" name="username" value="{{session['username']}}">
             <br>
             <input class="buttons" type="submit", value="Add question"/>
         </form>

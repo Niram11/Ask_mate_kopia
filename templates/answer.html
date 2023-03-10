@@ -50,6 +50,7 @@
           {% for comment in comments %}
           <td>{{comment['id']}}</td>
           <td>{{comment['submision_time']}}</td>
+          <td>{{comment['username']}}</td>
           <td>{{comment['message']}}</td>
           <td>{{comment['edited_numbers']}}</td>
           {% if session['username'] %}
