@@ -25,3 +25,13 @@ def secure_password(password):
 def generate_soil(password):
     password = password + password
     return password
+
+def login(login_data):
+    password = secure_password(login_data['password'])
+    stored_password = sql_manager.check_password(login_data['username'])
+    if sql_manager.check_for_existing_user(login_data['username']) and (password == stored_password):
+        print('logged')
+        return True
+    else:
+        print('incorect')
+        return False

@@ -9,6 +9,7 @@
     <form action="new_answer", method="POST">
         <label>Answer message</label>
         <input type="text", name="message"/>
+        <input type="hidden" name="username" value="{{session['username']}}">
         <br>
         <input class="buttons" type="submit", value="Add answer"/>
     </form>

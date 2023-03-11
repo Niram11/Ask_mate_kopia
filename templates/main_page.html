@@ -6,8 +6,15 @@
 </head>
 <body>
     <h1>Ask mate</h1>
+    {% if session['username'] %}
+    <a1>Logged as {{session['username']}}</a1>
+    <button class="buttons"type="button" onclick="location.href='/logout'">Logout</button>
+    {% else %}
     <button class="buttons"type="button" onclick="location.href='/register'">Register</button>
     <button class="buttons"type="button" onclick="location.href='/login'">Login</button>
+    {% endif %}
+
+
 
     <br>
     <h2>Most recent questions</h2>
@@ -37,7 +44,13 @@
         <input type="text", name="search" required>
         <input class="buttons"type="submit", value="Search"/>
     </form>
+    {% if session['username'] %}
     <button class="buttons"type="button" onclick="location.href='/list'">View all questions</button>
     <button class="buttons"type="button" onclick="location.href='/add_question'">Add question</button>
+    <button class="buttons"type="button" onclick="location.href='/users'">View users</button>
+    {% else %}
+    <button class="buttons"type="button" onclick="location.href='/list'">View all questions</button>
+    <button class="buttons"type="button" onclick="location.href='/add_question'">Add question</button>
+    {% endif %}
 </body>
 </html>

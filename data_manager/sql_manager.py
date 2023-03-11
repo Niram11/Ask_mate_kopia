@@ -28,7 +28,8 @@ def get_question(id):
 def add_question(question):
     id = generate_new_id('questions')
     timestamp = support_functions.get_timestamp()
-    commend = (f"INSERT into questions values({id}, '{timestamp}', 0, 0, '{question['title']}', '{question['message']}', NULL);")
+    commend = (f"""INSERT into questions values({id}, '{timestamp}', 0, 0, '{question['title']}',
+                '{question['message']}', NULL, '{question['username']}');""")
     insert_data_to_sql(commend)
     return id
 
@@ -38,14 +39,15 @@ def generate_new_id(table):
     return int(data[0]['max']) + 1
 
 def get_answers_for_question(question_id):
-    commend = (f"""SELECT id, submision_time, vote_number, message, image from answers
+    commend = (f"""SELECT id, submision_time, vote_number, message, image, username from answers
 	WHERE question_id = {question_id}""")
     return get_data_from_sql(commend)
 
 def add_answer(question_id, answer):
     id = generate_new_id('answers')
     timestamp = support_functions.get_timestamp()
-    commend = (f"INSERT into answers values({id}, '{timestamp}', 0, {question_id}, '{answer['message']}', NULL);")
+    commend = (f"""INSERT into answers values({id}, '{timestamp}', 0, {question_id}, 
+                '{answer['message']}', NULL, '{answer['username']}');""")
     insert_data_to_sql(commend)
 
 
@@ -120,14 +122,14 @@ def raise_views(question_id):
     insert_data_to_sql(commend2)
 
 def get_question_comments(question_id):
-    command = (f"""SELECT id, submision_time, message, edited_numbers from comments
-    WHERE  question_id = {question_id}""")
+    command = (f"""SELECT id, submision_time, message, edited_numbers, username from comments
+    WHERE  question_id = {question_id} and answer_id = 0""")
     return get_data_from_sql(command)
 
 def create_comment_for_question(question_id, comment):
     id = generate_new_id('comments')
     timestamp = support_functions.get_timestamp()
-    command = (f"INSERT into comments values({id}, {question_id}, 0, '{comment['message']}', '{timestamp}', 0);")
+    command = (f"INSERT into comments values({id}, {question_id}, 0, '{comment['message']}', '{timestamp}', 0, '{comment['username']}');")
     insert_data_to_sql(command)
 
 def get_answer(answer_id):
@@ -137,7 +139,7 @@ def get_answer(answer_id):
     return get_data_from_sql(command)
 
 def get_answer_comments(answer_id):
-    command = (f"""SELECT id, submision_time, message, edited_numbers from comments
+    command = (f"""SELECT id, submision_time, message, edited_numbers, username from comments
     WHERE  answer_id = {answer_id}""")
     return get_data_from_sql(command)
 
@@ -148,7 +150,7 @@ def create_comment_for_answer(answer_id, comment):
     WHERE id = {answer_id}""")
     data = get_data_from_sql(command1)
     command2 = (f"""INSERT into comments values({id}, {data[0]['question_id']}, {answer_id},
-                    '{comment['message']}', '{timestamp}', 0);""")
+                    '{comment['message']}', '{timestamp}', 0, '{comment['username']}');""")
     insert_data_to_sql(command2)
 
 def edit_answer(answer_id, edited_data):
@@ -229,21 +231,31 @@ def get_sorted_questions(order_by, order_direction):
         ORDER BY {order_by} {order_direction}""")
     return get_data_from_sql(commend)
 
-#TODO dodanie strony lub innego sposobu kominikowania o dublującym się użytkowniku
+#TODO dodanie strony lub innego sposobu komunikowania o dublującym się użytkowniku
 def register(registration_data):
-    if check_for_existing_user(registration_data['nickname']):
+    if check_for_existing_user(registration_data['username']):
         print('Użytkownik istnieje')
         return
     timestamp = support_functions.get_timestamp()
     password = support_functions.secure_password(registration_data['password'])
-    command = (f"INSERT into users values( '{registration_data['nickname']}', '{password}', '{timestamp}');")
+    command = (f"INSERT into users values( '{registration_data['username']}', '{password}', '{timestamp}');")
     insert_data_to_sql(command)
 
-def check_for_existing_user(nickname):
+def check_for_existing_user(username):
     commend = ("SELECT username from users")
     all_users = get_data_from_sql(commend)
     for i in all_users:
-        if i['username'] == nickname:
+        if i['username'] == username:
             return True
     else:
         return False
+    
+def check_password(username):
+    command = (f"""SELECT * from users
+        WHERE username LIKE '{username}'""")
+    password = get_data_from_sql(command)
+    return password[0]['password']
+
+def get_users():
+    command = ("SELECT username, registration_date from users")
+    return get_data_from_sql(command)
