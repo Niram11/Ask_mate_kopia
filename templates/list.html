@@ -34,6 +34,7 @@
         {% for question in questions %}
         <td>{{question['id']}}</td>
         <td>{{question['submision_time']}}</td>
+        <td>{{question['username']}}</td>
         <td>{{question['view_number']}}</td>
         <td>{{question['vote_number']}}</td>
         <td>{{question['title']}}</td>
@@ -46,10 +47,9 @@
     <br>
     {% if session['username'] %}
     <button class="buttons"type="button" onclick="location.href='/add_question'">Add question</button>
-    <button class="buttons"type="button" onclick="location.href='/'">Back to main page</button>
-    {% else %}
-    <button class="buttons"type="button" onclick="location.href='/'">Back to main page</button>
     {% endif %}
+    <button class="buttons"type="button" onclick="location.href='/tags'">View tags</button>
+    <button class="buttons"type="button" onclick="location.href='/'">Back to main page</button>
 
 </body>
 </html>

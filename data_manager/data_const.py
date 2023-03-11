@@ -15,4 +15,5 @@ ANSWER_QUESTION_ID = 3
 QUESTIONS_HEADERS = ['Question ID', 'Submision time','username' ,'View number', 'Vote number', 'Title', 'Message', 'Image']
 ANSWER_HEADERS = ['Answer ID', 'Submision time','username', 'Vote number', 'Answer', 'Image']
 COMMENT_HEADERS = ['Comment ID', 'Submision time', 'username', 'Comment', 'Edited times']
-USERS_HEADERS = ['Username', 'Registraition date']
+USERS_HEADERS = ['Username', 'Registraition date', 'Number of asked questions', 'Number of posted answers', 'Number of posted comments', 'reputation']
+TAGS_LIST_HEADERS = ['Tag ID', 'Name', 'Used times']

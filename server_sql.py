@@ -39,7 +39,6 @@ def question(id):
     answers = sql_manager.get_answers_for_question(id)
     comments = sql_manager.get_question_comments(id)
     tags = sql_manager.get_qustion_tags(id)
-    print(answers)
     return render_template('question.html', question = question, question_headers = data_const.QUESTIONS_HEADERS,
     answers = answers, answer_headers = data_const.ANSWER_HEADERS, comments = comments, comment_headers = data_const.COMMENT_HEADERS,
     tags = tags)
@@ -206,9 +205,36 @@ def logout():
 @app.route('/users')
 def users():
     users = sql_manager.get_users()
-    print(users)
     return render_template('users.html', users = users, headers = data_const.USERS_HEADERS)
     
+@app.route('/user/<username>')
+def user_page(username):
+    data = sql_manager.get_specific_user_data(username)
+    questions, answers, comments = support_functions.get_user_entries(username)
+    print(comments)
+    return render_template('user_page.html', username = username, data = data, question_headers = data_const.QUESTIONS_HEADERS,
+    answer_headers = data_const.ANSWER_HEADERS, comment_headers = data_const.COMMENT_HEADERS, questions = questions, answers = answers,
+    comments = comments)
+
+@app.route('/answer/<answer_id>/accept')
+def accept_answer(answer_id):
+    question_id = sql_manager.accept_answer(answer_id)
+    return redirect(url_for('question', id = question_id))
+
+@app.route('/answer/<answer_id>/unaccept')
+def unaccept_answer(answer_id):
+    question_id = sql_manager.unaccept_answer(answer_id)
+    return redirect(url_for('question', id = question_id))
+
+@app.route('/tags')
+def tags():
+    tags = sql_manager.list_of_tags()
+    return render_template('tags.html', headers = data_const.TAGS_LIST_HEADERS, tags = tags) 
+
+@app.route('/bonus-questions')
+def bonus_questions():
+    return 'bonus questions'
+
 
 if __name__ == "__main__":
     app.run(

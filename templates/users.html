@@ -13,12 +13,20 @@
             {% for header in headers %}
             <th>{{header}}</th>
             {% endfor %}
+            <th></th>
 
         </tr>
         <tr>
             {% for user in users %}
             <td>{{user['username']}}</td>
             <td>{{user['registration_date']}}</td>
+            <td>{{user['number_of_questions']}}</td>
+            <td>{{user['number_of_answers']}}</td>
+            <td>{{user['number_of_comments']}}</td>
+            <td>{{user['reputation']}}</td>
+            <td><button class="buttons"type="button" onclick="location.href='{{ url_for( 'user_page', username = user['username'] )}}'">View profile</button>
+
+            </td>
         </tr>
             {% endfor %}
     </table> 

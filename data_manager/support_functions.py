@@ -35,3 +35,9 @@ def login(login_data):
     else:
         print('incorect')
         return False
+    
+def get_user_entries(username):
+    questions = sql_manager.get_user_questions(username)
+    answers = sql_manager.get_user_answers(username)
+    comments = sql_manager.get_user_comments(username)
+    return questions, answers, comments

@@ -120,6 +120,7 @@
 
 
     <h1>Answers</h1>
+    
     {% if answers == [] %}
     <a>There are no answers yet.</a>
     <br>
@@ -132,8 +133,8 @@
           {% endfor %}
           <th></th>
       </tr>
-      <tr>
-          {% for answer in answers %}
+      {% for answer in answers %}
+      <tr {% if answer['accept_status'] == 'accepted' %} class = "accepted" {% endif %}>
           <td>{{answer['id']}}</td>
           <td>{{answer['submision_time']}}</td>
           <td>{{answer['username']}}</td>
@@ -149,7 +150,15 @@
               <button class="buttons"type="button" onclick="location.href='{{ url_for( 'answer_vote_down', answer_id = answer['id'] )}}'">Vote down answer</button>
               <br>
               <button class="buttons"type="button" onclick="location.href='{{ url_for( 'answer', answer_id = answer['id'] )}}'">View answer</button>
-              
+              {% if session['username'] == question[0]['username'] %}
+                  {% if answer['accept_status'] == 'accepted' %}
+                  <br>
+                  <button class="buttons"type="button" onclick="location.href='{{ url_for( 'unaccept_answer', answer_id = answer['id'] )}}'">Unaccept answer</button>
+                  {% else %}
+                  <br>
+                  <button class="buttons"type="button" onclick="location.href='{{ url_for( 'accept_answer', answer_id = answer['id'] )}}'">Accept answer</button>
+                  {% endif %}
+              {% endif %}
           </td>
           {% else %}
           <td>

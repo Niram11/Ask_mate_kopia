@@ -1,0 +1,26 @@
+<html>
+<head>
+    <title>List of all tags</title>
+    <meta keywords.="story agile">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/static.css') }}">
+</head>
+<body>
+    <h1>List of all tags</h1>   
+    <table style="margin:auto;">
+        <tr>
+        {% for header in headers %}
+        <th>{{header}}</th>
+        {% endfor %}
+        </tr>
+        {% for tag in tags %}
+        <tr>
+            <td>{{tag['id']}}</td>
+            <td>{{tag['name']}}</td>
+            <td>{{tag['used_times']}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <button class="buttons"type="button" onclick="location.href='/list'">View all questions</button>
+    <button class="buttons"type="button" onclick="location.href='/'">Back to main page</button>
+</body>
+</html>
