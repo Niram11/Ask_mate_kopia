@@ -1,0 +1,89 @@
+<html>
+<head>
+    <title>User {{username}}</title>
+    <meta keywords.="story agile">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/static.css') }}">
+</head>
+<body>
+    <h1>User {{username}}</h1> 
+    <h4>Registraition date : {{data[0]['registration_date']}}</h4>
+    <h4>Number of asked questions : {{data[0]['number_of_questions']}}</h4>
+    <h4>Number of answers : {{data[0]['number_of_answers']}}</h4>
+    <h4>Number of comments : {{data[0]['number_of_comments']}}</h4>
+
+    <h1>User questions</h1>
+    <table style="width:100%">
+        <tr>
+        {% for header in question_headers %}
+        <th>{{header}}</th>
+        {% endfor %}
+        <th></th>
+        </tr>
+        <tr>
+        {% for question in questions %}
+        <td>{{question['id']}}</td>
+        <td>{{question['submision_time']}}</td>
+        <td>{{question['username']}}</td>
+        <td>{{question['view_number']}}</td>
+        <td>{{question['vote_number']}}</td>
+        <td>{{question['title']}}</td>
+        <td>{{question['message']}}</td>
+        <td>{{question['image']}}</td>
+        <td><button class="buttons"type="button" onclick="location.href='{{ url_for( 'question', id = question['id'] ) }}'">View question</button></td>
+
+        </tr>
+        {% endfor %}
+    </table>
+    <br>
+
+    <h1>User answers</h1>
+    <table style="width:100%">
+        <tr>
+            {% for header in answer_headers %}
+            <th>{{header}}</th>
+            {% endfor %}
+            <th></th>
+        </tr>
+        <tr>
+            {% for answer in answers %}
+            <td>{{answer['id']}}</td>
+            <td>{{answer['submision_time']}}</td>
+            <td>{{answer['username']}}</td>
+            <td>{{answer['vote_number']}}</td>
+            <td>{{answer['message']}}</td>
+            <td>{{answer['image']}}</td>
+            <td><button class="buttons"type="button" onclick="location.href='{{ url_for( 'answer', answer_id = answer['id'] )}}'">View answer</button></td>
+            </tr>
+            {% endfor %}
+        </table>
+
+
+    <h1>User comments</h1>
+    <table style="width:100%">
+        <tr>
+        {% for header in comment_headers %}
+        <th>{{header}}</th>
+        {% endfor %}
+        <th></th>
+        </tr>
+        <tr>
+            {% for comment in comments %}
+            <td>{{comment['id']}}</td>
+            <td>{{comment['submision_time']}}</td>
+            <td>{{comment['username']}}</td>
+            <td>{{comment['message']}}</td>
+            <td>{{comment['edited_numbers']}}</td>
+            {% if comment['answer_id'] == 0 %}
+            <td><button class="buttons"type="button" onclick="location.href='{{ url_for( 'question', id = comment['question_id'] ) }}'">View comment</button></td>
+            {% else %}
+            <td><button class="buttons"type="button" onclick="location.href='{{ url_for( 'answer', answer_id = comment['answer_id'] )}}'">View comment</button></td>
+            {% endif %}
+            
+        </tr>
+        {% endfor %}
+        </table>
+    <button class="buttons"type="button" onclick="location.href='/'">Return</button>
+
+
+</body>
+</html>

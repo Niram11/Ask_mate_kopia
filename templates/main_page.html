@@ -9,6 +9,7 @@
     {% if session['username'] %}
     <a1>Logged as {{session['username']}}</a1>
     <button class="buttons"type="button" onclick="location.href='/logout'">Logout</button>
+    <button class="buttons"type="button" onclick="location.href='{{ url_for( 'user_page', username = session['username'] ) }}'">Your profile </button>
     {% else %}
     <button class="buttons"type="button" onclick="location.href='/register'">Register</button>
     <button class="buttons"type="button" onclick="location.href='/login'">Login</button>
@@ -29,6 +30,7 @@
         {% for question in questions %}
         <td>{{question['id']}}</td>
         <td>{{question['submision_time']}}</td>
+        <td>{{question['username']}}</td>
         <td>{{question['view_number']}}</td>
         <td>{{question['vote_number']}}</td>
         <td>{{question['title']}}</td>
@@ -44,13 +46,12 @@
         <input type="text", name="search" required>
         <input class="buttons"type="submit", value="Search"/>
     </form>
+    <button class="buttons"type="button" onclick="location.href='/bonus-questions'">Bonus questions searching</button>
+    <button class="buttons"type="button" onclick="location.href='/list'">View all questions</button>
     {% if session['username'] %}
-    <button class="buttons"type="button" onclick="location.href='/list'">View all questions</button>
-    <button class="buttons"type="button" onclick="location.href='/add_question'">Add question</button>
     <button class="buttons"type="button" onclick="location.href='/users'">View users</button>
-    {% else %}
-    <button class="buttons"type="button" onclick="location.href='/list'">View all questions</button>
     <button class="buttons"type="button" onclick="location.href='/add_question'">Add question</button>
     {% endif %}
+    <button class="buttons"type="button" onclick="location.href='/tags'">View tags</button>
 </body>
 </html>

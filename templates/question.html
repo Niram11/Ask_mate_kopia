@@ -56,10 +56,13 @@
         </tr>
         {% endfor %}
     </table>
-    {% if session['username'] %}
+    {% if session['username'] == question[0]['username'] %}
     <br>
     <button class="buttons"type="button" onclick="location.href='{{ url_for( 'question_edit', question_id = question[0]['id'] )}}'">Edit question</button>
     <button class="buttons"type="button" onclick="location.href='{{ url_for( 'question_delete', question_id = question[0]['id'] )}}'">Delete question</button>
+    <button class="buttons"type="button" onclick="location.href='{{ url_for( 'question_vote_up', question_id = question[0]['id'] )}}'">Vote up question</button>
+    <button class="buttons"type="button" onclick="location.href='{{ url_for( 'question_vote_down', question_id = question[0]['id'] )}}'">Vote down question</button>
+    {% elif session['username'] %}
     <button class="buttons"type="button" onclick="location.href='{{ url_for( 'question_vote_up', question_id = question[0]['id'] )}}'">Vote up question</button>
     <button class="buttons"type="button" onclick="location.href='{{ url_for( 'question_vote_down', question_id = question[0]['id'] )}}'">Vote down question</button>
     {% else %}
@@ -120,6 +123,7 @@
 
 
     <h1>Answers</h1>
+    
     {% if answers == [] %}
     <a>There are no answers yet.</a>
     <br>
@@ -132,8 +136,8 @@
           {% endfor %}
           <th></th>
       </tr>
-      <tr>
-          {% for answer in answers %}
+      {% for answer in answers %}
+      <tr {% if answer['accept_status'] == 'accepted' %} class = "accepted" {% endif %}>
           <td>{{answer['id']}}</td>
           <td>{{answer['submision_time']}}</td>
           <td>{{answer['username']}}</td>
@@ -149,7 +153,15 @@
               <button class="buttons"type="button" onclick="location.href='{{ url_for( 'answer_vote_down', answer_id = answer['id'] )}}'">Vote down answer</button>
               <br>
               <button class="buttons"type="button" onclick="location.href='{{ url_for( 'answer', answer_id = answer['id'] )}}'">View answer</button>
-              
+              {% if session['username'] == question[0]['username'] %}
+                  {% if answer['accept_status'] == 'accepted' %}
+                  <br>
+                  <button class="buttons"type="button" onclick="location.href='{{ url_for( 'unaccept_answer', answer_id = answer['id'] )}}'">Unaccept answer</button>
+                  {% else %}
+                  <br>
+                  <button class="buttons"type="button" onclick="location.href='{{ url_for( 'accept_answer', answer_id = answer['id'] )}}'">Accept answer</button>
+                  {% endif %}
+              {% endif %}
           </td>
           {% else %}
           <td>
