@@ -56,10 +56,13 @@
         </tr>
         {% endfor %}
     </table>
-    {% if session['username'] %}
+    {% if session['username'] == question[0]['username'] %}
     <br>
     <button class="buttons"type="button" onclick="location.href='{{ url_for( 'question_edit', question_id = question[0]['id'] )}}'">Edit question</button>
     <button class="buttons"type="button" onclick="location.href='{{ url_for( 'question_delete', question_id = question[0]['id'] )}}'">Delete question</button>
+    <button class="buttons"type="button" onclick="location.href='{{ url_for( 'question_vote_up', question_id = question[0]['id'] )}}'">Vote up question</button>
+    <button class="buttons"type="button" onclick="location.href='{{ url_for( 'question_vote_down', question_id = question[0]['id'] )}}'">Vote down question</button>
+    {% elif session['username'] %}
     <button class="buttons"type="button" onclick="location.href='{{ url_for( 'question_vote_up', question_id = question[0]['id'] )}}'">Vote up question</button>
     <button class="buttons"type="button" onclick="location.href='{{ url_for( 'question_vote_down', question_id = question[0]['id'] )}}'">Vote down question</button>
     {% else %}

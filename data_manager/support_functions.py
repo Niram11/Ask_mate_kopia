@@ -1,5 +1,5 @@
 from datetime import datetime
-from data_manager import sql_manager
+from data_manager import sql_manager, tags_data, user_data, questions_data, answers_data, comments_data
 import hashlib
 
 def get_timestamp():
@@ -8,13 +8,13 @@ def get_timestamp():
     return str(timestamp)
 
 def add_tag(tag, question_id):
-    tags = sql_manager.get_tags()
+    tags = tags_data.get_tags()
     for i in tags:
         if i['name'] == tag:
-            sql_manager.add_tag_to_question(i['id'], question_id)
+            tags_data.add_tag_to_question(i['id'], question_id)
             return
-    new_tag_id = sql_manager.create_new_tag(tag)
-    sql_manager.add_tag_to_question(new_tag_id, question_id)
+    new_tag_id = tags_data.create_new_tag(tag)
+    tags_data.add_tag_to_question(new_tag_id, question_id)
 
 def secure_password(password):
     password = generate_soil(password)
@@ -28,8 +28,8 @@ def generate_soil(password):
 
 def login(login_data):
     password = secure_password(login_data['password'])
-    stored_password = sql_manager.check_password(login_data['username'])
-    if sql_manager.check_for_existing_user(login_data['username']) and (password == stored_password):
+    stored_password = user_data.check_password(login_data['username'])
+    if user_data.check_for_existing_user(login_data['username']) and (password == stored_password):
         print('logged')
         return True
     else:
@@ -37,7 +37,7 @@ def login(login_data):
         return False
     
 def get_user_entries(username):
-    questions = sql_manager.get_user_questions(username)
-    answers = sql_manager.get_user_answers(username)
-    comments = sql_manager.get_user_comments(username)
+    questions = questions_data.get_user_questions(username)
+    answers = answers_data.get_user_answers(username)
+    comments = comments_data.get_user_comments(username)
     return questions, answers, comments

@@ -48,9 +48,9 @@
     </form>
     <button class="buttons"type="button" onclick="location.href='/bonus-questions'">Bonus questions searching</button>
     <button class="buttons"type="button" onclick="location.href='/list'">View all questions</button>
-    <button class="buttons"type="button" onclick="location.href='/add_question'">Add question</button>
     {% if session['username'] %}
     <button class="buttons"type="button" onclick="location.href='/users'">View users</button>
+    <button class="buttons"type="button" onclick="location.href='/add_question'">Add question</button>
     {% endif %}
     <button class="buttons"type="button" onclick="location.href='/tags'">View tags</button>
 </body>
